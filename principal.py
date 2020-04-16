@@ -48,6 +48,36 @@ class Cell:
         return "Ma cellule se trouve à la postion: {}.  Est de type : {}."\
         .format(self.position, self.cell_type)
 
+class Objects: 
+    
+    OBJECTS_LIST =["Needle","Plastic tube","Ether"]
+    OBJECTS_DICT={}
+    
+    def __init__(self, name, position):
+        self.position = position
+        self.object_name = name 
+        self.image = "image"
+
+    
+    # def random_position(self, valid_cells_list):
+        # rand_numb = random.randint(0,len(valid_cells_list) - 1)
+        # item = valid_cells_list[rand_numb]
+        # return item
+    
+    @classmethod
+    def initialize_objects(cls,valid_cells_list):
+        for name in Objects.OBJECTS_LIST:
+            rand_numb = random.randint(0,len(valid_cells_list) - 1)
+            position = valid_cells_list[rand_numb]
+            lab_object = Objects( name, position)
+            cls.OBJECTS_DICT[position] = name
+            print(lab_object)
+    
+    def __repr__(self):
+        return "Mon objet : {} se trouve à la postion: {}."\
+        .format(self.object_name, self.position)
+
+
 class MacGyver: 
     
     def __init__(self,position):
@@ -55,13 +85,14 @@ class MacGyver:
         self.image = "image"
         self.collected_objects =[]
       
-    # def check_cells(self, valid_cells):
-        # if valid_cells[self._n_position]: 
-            # self.position = self._n_position
-            # print(self.position,  "OK") 
-            # continue     
+    def check_cells(self._n_position, valid_cells, objects_dict):
+        if valid_cells[self.position]: 
+            self.position = self._n_position
+            if objects_dicts.items():
+            print(self.position,  "OK") 
+            continue     
     
-    def mac_moves(self, valid_cells):
+    def mac_moves(self):
         
         play = True
         while play:
@@ -123,34 +154,7 @@ class Guard:
         self.image = image
 
 
-class Objects: 
-    
-    OBJECTS_LIST =["Needle","Plastic tube","Ether"]
-    OBJECTS_DICT={}
-    
-    def __init__(self, name, position):
-        self.position = position
-        self.object_name = name 
-        self.image = "image"
 
-    
-    # def random_position(self, valid_cells_list):
-        # rand_numb = random.randint(0,len(valid_cells_list) - 1)
-        # item = valid_cells_list[rand_numb]
-        # return item
-    
-    @classmethod
-    def initialize_objects(cls,valid_cells_list):
-        for name in cls.OBJECTS_LIST:
-            rand_numb = random.randint(0,len(valid_cells_list) - 1)
-            position = valid_cells_list[rand_numb]
-            lab_object = Objects( name, position)
-            cls.OBJECTS_DICT[position] = name
-            print(lab_object)
-    
-    def __repr__(self):
-        return "Mon objet : {} se trouve à la postion: {}."\
-        .format(self.object_name, self.position)
 
 if __name__ == "__main__":
     content = a_id.get_source('labyrinthe.txt')
