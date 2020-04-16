@@ -57,12 +57,6 @@ class Objects:
         self.position = position
         self.object_name = name 
         self.image = "image"
-
-    
-    # def random_position(self, valid_cells_list):
-        # rand_numb = random.randint(0,len(valid_cells_list) - 1)
-        # item = valid_cells_list[rand_numb]
-        # return item
     
     @classmethod
     def initialize_objects(cls,valid_cells_list):
@@ -84,16 +78,26 @@ class MacGyver:
         self.position = position
         self.image = "image"
         self.collected_objects =[]
-      
-    def check_cells(self._n_position, valid_cells, objects_dict):
-        if valid_cells[self.position]: 
-            self.position = self._n_position
-            if objects_dicts.items():
-            print(self.position,  "OK") 
-            continue     
     
-    def mac_moves(self):
-        
+    def check_position(self,valid_cells):
+        try:
+            if valid_cells[self._n_position]: 
+                self.position = self._n_position
+                print(self.position,  "OK")
+        except:
+            print(self.position,  "MUR")
+         
+    def check_objects(self, objects_dicts):
+        try:
+            if objects_dicts[self._n_position]:
+                object_name = objects_dicts[self._n_position]
+                self.collected_objects.append(object_name)
+                print(self.collected_objects)
+                del objects_dicts[self._n_position]
+        except :
+            pass
+    
+    def mac_moves(self,valid_cells,objects_dicts):
         play = True
         while play:
         
@@ -103,46 +107,27 @@ class MacGyver:
             # move right
             if arrow_getch == 224 and arrow_getche == 77:
                 self._n_position = (self.position[0]+1, self.position[1]+0)
-                try:
-                    if valid_cells[self._n_position]: 
-                        self.position = self._n_position
-                        print(self.position,  "OK") 
-                        continue                        
-                except:
-                    print(self.position,  "MUR")
-                    continue 
-                    
+                self.check_position(valid_cells)
+                self.check_objects(objects_dicts)
+               
             # move down
             elif arrow_getch == 224 and arrow_getche == 80:
-                self._n_position = (self.position[0]+0, self.position[1]-1)
-                try:
-                    if valid_cells[self._n_position]: 
-                        self.position = self._n_position
-                        print(self.position,  "OK") 
-                        continue                        
-                except:
-                    print(self.position,  "MUR")
-                    continue
+                self._n_position = (self.position[0]+0, self.position[1]+1)
+                self.check_position(valid_cells)
+                self.check_objects(objects_dicts)
+                                 
             # move left        
             elif arrow_getch == 224 and arrow_getche == 75:
                 self._n_position = (self.position[0]-1, self.position[1]+ 0)
-                try:
-                    if valid_cells[self._n_position]: 
-                        self.position = self._n_position
-                        print(self.position,  "OK")    
-                except:
-                    print(self.position,  "MUR")
+                self.check_position(valid_cells)
+                self.check_objects(objects_dicts)               
                     
             # move up 
             elif arrow_getch == 224 and arrow_getche == 72:
-                self._n_position = (self.position[0]+0, self.position[1]+ 1)
-                try:
-                    if valid_cells[self._n_position]: 
-                        self.position = self._n_position
-                        print(self.position,  "OK")    
-                except:
-                    print(self.position,  "MUR")
-            
+                self._n_position = (self.position[0]+0, self.position[1]-1)
+                self.check_position(valid_cells)
+                self.check_objects(objects_dicts)  
+                               
             else:
                 play = False
 
@@ -161,8 +146,10 @@ if __name__ == "__main__":
     cell = Cell.initialize_cells(content)
     valid_cells,valid_cells_list = Cell.available_paths(Cell.GRID)
     Objects.initialize_objects(valid_cells_list)
-    # mac = MacGyver((0,7))
-    # MacGyver.mac_moves(mac,valid_cells)
+    mac = MacGyver((0,7))
+    MacGyver.mac_moves(mac, valid_cells, {(1, 7): 'Needle', (1, 4): 'Plastic tube', (11, 5): 'Ether'}
+)
+    # MacGyver.mac_moves(mac, valid_cells, Objects.OBJECTS_DICT)
     #print (nouv_pos)
     # print(cell.position,cell.cell_type,cell.cell_validity)
     # print(Cell.CELLS[(14, 14)])
