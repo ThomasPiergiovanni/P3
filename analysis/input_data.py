@@ -22,8 +22,33 @@ def get_source(data_file):
     except:
         lg.critical('Destination unknown')
 
+
+def prepare_data(content):
+    element_list=[]
+    for elt in content:
+        try:
+            elt =str(elt)
+            if elt == "0":
+                element_list.append("wall")
+            elif elt == "1":
+                element_list.append("path")
+            elif elt == "2":
+                element_list.append("start")
+            elif elt == "3":
+                element_list.append("end")
+            else:
+                pass
+        except:
+            lg.critical ("Str conversion not done")
+    return element_list
+
+def main(data_file):
+    content= get_source(data_file)
+    content_ready = prepare_data(content)
+    return content_ready  
+
 if __name__ == "__main__":
     print("Executed here")
-    get_source(data_file)
+    main(data_file)
 else: 
     print("Imported")
