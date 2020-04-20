@@ -13,19 +13,12 @@ class Cell:
 
     GRID_DIM = 15
     CELLS_LIST=[]
-    CELLS_DICT = {}
-    VALID_CELLS_LIST=[]
-    VALID_CELLS_DICT = {}
     
     def __init__(self,xy_position,index_position,cell_type,):
         self.xy_position = xy_position    # (x, y) tuple
         self.index_position = index_position    # index in list
         self.cell_type = cell_type  # str
 
-    def valid_cells(self):
-        if self.cell_type != "wall":
-            Cell.VALID_CELLS_LIST.append((self.xy_position,self.index_position,self.cell_type))
-            Cell.VALID_CELLS_DICT[self.xy_position] = self.cell_type
 
     @classmethod
     def initialize_cells(cls,input_list):
@@ -33,16 +26,14 @@ class Cell:
             x = i % cls.GRID_DIM
             y = i // cls.GRID_DIM
             cell = Cell((x,y),i,elt)
-            cls.CELLS_LIST.append(((x,y),i,elt))
-            cls.CELLS_DICT[(x,y)] = elt
-            cls.valid_cells(cell)
+            cls.CELLS_LIST.append(cell)
+
 
 
 class Object: 
     
     OBJ = ["Needle","Plastic tube","Ether"]
     OBJECTS_LIST =[]
-    OBJECTS_DICT={}
     
     def __init__(self,xy_position,index_position,name):
         self.xy_position = xy_position
@@ -51,34 +42,31 @@ class Object:
         self.image = "image"
     
     @classmethod
-    def initialize_objects(cls,valid_cells_list):
+    def initialize_objects(cls,cells_list):
         for name in cls.OBJ:
-            rand_numb = random.randint(0,len(valid_cells_list) - 1)
-            xy_position = valid_cells_list[rand_numb][0]
-            index_position = valid_cells_list[rand_numb][1]
-            obje = Object(xy_position,index_position,name)
-            cls.OBJECTS_LIST.append((xy_position,index_position,name))
-            cls.OBJECTS_DICT[xy_position] = name
+            valid_cells = [elt for elt in cells_list if elt.cell_type == "path"]
+            rand_cell = random.choice(valid_cells)
+            xy_position = rand_cell.xy_position
+            index_position = rand_cell.index_position
+            objekt = Object(xy_position,index_position,name)
+            cls.OBJECTS_LIST.append(objekt)
 
-    def __repr__(self):
-        return "Mon objet : {} se trouve à la postion: {}."\
-        .format(self.object_name, self.position)
 
 class MacGyver: 
 
     
     def __init__(self):
-        self.position = (0,0)
+        self.xy_position = (0,0)
+        self.index_position = "position"
         self.name = "Mac Gyver"
         self.image = "image"
         self.collected_objects =[]
 
     
-    def initial_position(self,valid_cells_dict):
-        for key, value in valid_cells_dict.items():
-            if value == "start":
-                self.position = key
-
+    def initial_position(self,cells):
+        self.xy_position = [elt.xy_position for elt in cells if elt.cell_type =='start']
+        self.index_position = [elt.index_position for elt in cells if elt.cell_type =='start']
+        return self.xy_position, self.index_position
 
     def check_position(self,valid_cells_dict):
         try:
@@ -169,17 +157,19 @@ if __name__ == "__main__":
     # Step 2: Generate my cell instances { position : (x,y), cell type : 'wall/path/start/end'} from source
    
     Cell.initialize_cells(content_ready)
-
-    # Cell.available_paths(Cell.CELLS_DICT)
+    valid_cells = [elt.cell_type for elt in Cell.CELLS_LIST if elt.cell_type != "wall"]
 
     # Step4 : Create objects  { position : (x,y), object name : 'Platic tube/Ether/Neddle'}
-    Objects.initialize_objects(valid_cells_list)
+    Object.initialize_objects(Cell.CELLS_LIST)
+    objects = [elt.object_name for elt in Object.OBJECTS_LIST]
+    # print (objects)
 
     #Step 5 : Create MacGyver
     # Option A
     player = MacGyver()
-    player.initial_position(valid_cells_dict)
-    print(player)
+    MacGyver.initial_position(player,Cell.CELLS_LIST)
+
+    print(player.index_position)
 
 
 
