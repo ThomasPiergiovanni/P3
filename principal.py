@@ -2,6 +2,7 @@ import os
 import msvcrt
 import random
 import logging as lg
+import math
 
 import analysis.input_data as a_id # import source data
 
@@ -56,7 +57,7 @@ class MacGyver:
     def __init__(self):
         self.xy_position = (0,0)
         self.index_position = "position"
-        self.name = "Mac Gyver"
+        self.name = "MacGyver"
         self.image = "image"
         self.collected_objects =[]
 
@@ -88,6 +89,66 @@ class MacGyver:
             index = index[0]
             self.collected_objects.append(object_name)
             del objects[index]
+
+    def show (self,cells,objects):
+        _cells = []
+        for elt in cells:
+            if elt.xy_position == self.xy_position:
+                _show_type = self.name
+                _show_xy = elt.xy_position
+                _show_index = elt.index_position
+                _cells.append([_show_type,_show_xy,_show_index])
+            else:
+                _show_type = elt.cell_type
+                _show_xy = elt.xy_position
+                _show_index = elt.index_position
+                _cells.append([_show_type,_show_xy,_show_index])
+
+        for _elt in _cells:
+            for obj in objects:
+                if _elt[1] == obj.xy_position:
+                    _elt[0] = obj.object_name
+
+
+        for _elt in _cells:
+            print(_elt[0])
+            if _elt[0] == "start":
+                _elt [0] = "S" 
+            elif _elt[0] == "end":
+                _elt [0] = "E" 
+            elif _elt[0] == "wall":
+                _elt [0] = "X"
+            elif _elt[0] == "path":
+                _elt [0] = " "
+            elif _elt[0] == "MacGyver":
+                _elt [0] = "M"
+            else:
+                _elt [0] = "O"
+
+        a = len(_cells)
+        sq = int(math.sqrt(a))
+        fl_0 = " _ _ _ "  
+        fl_1 = "|     |"  
+        fl_2 = "|  "+_elt [0]+"  |" 
+        fl_3 = "|_ _ _|" 
+        ol_1 = "|     |"  
+        ol_2 = "|  "+_elt [0]+"  |" 
+        ol_3 = "|_ _ _|"
+        i=0
+        while i < sq:
+            if i == 0:
+                print (sq * fl_0)
+                print (sq * fl_1)
+                print (sq * fl_2)
+                print (sq * fl_3)
+                i +=1
+            else:
+                print (sq * ol_1)
+                print (sq * ol_2)
+                print (sq * ol_3)
+                i +=1
+
+        del _cells
     
     def moves(self,cells,objects):
         play = True
@@ -102,7 +163,7 @@ class MacGyver:
                 self._n_position = (self.xy_position[0]+1, self.xy_position[1]+0)
                 self.check_position(cells)
                 self.check_objects(objects)
-                # self.show(Cell.GRID_DIM, Cell.CELLS,objects)
+                self.show(cells,objects)
                 print(self)
                
             # move down
@@ -110,7 +171,7 @@ class MacGyver:
                 self._n_position = (self.xy_position[0]+0, self.xy_position[1]+1)
                 self.check_position(cells)
                 self.check_objects(objects)
-                # self.show(Cell.GRID_DIM, Cell.CELLS,objects)
+                self.show(cells,objects)
                 print(self)
                                  
             # move left        
@@ -118,7 +179,7 @@ class MacGyver:
                 self._n_position = (self.xy_position[0]-1, self.xy_position[1]+ 0)
                 self.check_position(cells)
                 self.check_objects(objects)
-                # self.show(Cell.GRID_DIM, Cell.CELLS,objects)
+                self.show(cells,objects)
                 print(self)               
                     
             # move up 
@@ -126,7 +187,7 @@ class MacGyver:
                 self._n_position = (self.xy_position[0]+0, self.xy_position[1]-1)
                 self.check_position(cells)
                 self.check_objects(objects)
-                # self.show(Cell.GRID_DIM, Cell.CELLS,objects)
+                self.show(cells,objects)
                 print(self) 
                                
             else:
@@ -161,7 +222,7 @@ if __name__ == "__main__":
 
     # Step4 : Create objects  { position : (x,y), object name : 'Platic tube/Ether/Neddle'}
     Object.initialize_objects(Cell.CELLS)
-    object_list= [(elt.xy_position,elt.object_name) for elt in Object.OBJECTS]
+    # object_list= [(elt.xy_position,elt.object_name) for elt in Object.OBJECTS]
     
     player = MacGyver()
     MacGyver.initial_position(player,Cell.CELLS)
