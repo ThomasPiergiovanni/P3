@@ -1,6 +1,6 @@
 import os
 import logging as lg
-lg.basicConfig(level=lg.DEBUG)
+lg.basicConfig(level=lg.WARNING)
 
 def get_source(data_file):
 

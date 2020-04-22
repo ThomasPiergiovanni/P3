@@ -50,6 +50,18 @@ class Object:
             cells_index = rand_cell.index_position
             objekt = Object(xy_position,index, cells_index,name)
             cls.OBJECTS.append(objekt)
+
+class Guard: 
+    
+    def __init__(self):
+        self.position = (0,0) 
+        self.image = "image"
+
+    def initial_position(self,cells):
+        xy_position = [elt.xy_position  for elt in cells if elt.cell_type == "end"]
+        self.xy_position = xy_position[0]
+        index_position = [elt.index_position  for elt in cells if elt.cell_type == "end"]
+        self.index_position =index_position[0]
             
 class MacGyver: 
 
@@ -67,29 +79,33 @@ class MacGyver:
         self.xy_position = xy_position[0]
         index_position = [elt.index_position  for elt in cells if elt.cell_type == "start"]
         self.index_position =index_position[0]
-        print(self.xy_position,self.index_position)
-
 
     def check_position(self,cells):
 
         xy_position = [elt.xy_position for elt in cells if elt.xy_position == self._n_position and elt.cell_type != "wall" ]
         if xy_position:
             self.xy_position = xy_position[0]
-            print(self.xy_position,  "OK")
-        else:
-            print(self.xy_position,  "MUR")
-
-
+            play = True
+            for elt in cells:
+                if self.xy_position == elt.xy_position and elt.cell_type == "end" and len(self.collected_objects) == 3:
+                    print("YOU WIN!!!")
+                    play = False
+                    return play
+                if self.xy_position == elt.xy_position and elt.cell_type == "end" and len(self.collected_objects) < 3:
+                    print("GAME OVER \nYou did not collect all objects!!!")
+                    play = False
+                    return play
+            return play
+        play = True
+        return play
     def check_objects(self, objects):
 
-        object_name = [elt.object_name for elt in objects if elt.xy_position== self._n_position]
-        index = [elt.index for elt in objects if elt.xy_position== self._n_position]
-        if object_name:
-            object_name = object_name[0]
-            index = index[0]
-            self.collected_objects.append(object_name)
-            del objects[index]
-
+        for i, elt in enumerate (objects):
+            if elt.xy_position== self._n_position:
+                object_name = elt.object_name
+                self.collected_objects.append(object_name)
+                del objects[i]
+                print (len(self.collected_objects))
     def show (self,cells,objects):
         _cells = []
         for elt in cells:
@@ -111,7 +127,6 @@ class MacGyver:
 
 
         for _elt in _cells:
-            print(_elt[0])
             if _elt[0] == "start":
                 _elt [0] = "S" 
             elif _elt[0] == "end":
@@ -126,32 +141,25 @@ class MacGyver:
                 _elt [0] = "O"
 
         a = len(_cells)
-        sq = int(math.sqrt(a))
-        fl_0 = " _ _ _ "  
-        fl_1 = "|     |"  
-        fl_2 = "|  "+_elt [0]+"  |" 
-        fl_3 = "|_ _ _|" 
-        ol_1 = "|     |"  
-        ol_2 = "|  "+_elt [0]+"  |" 
-        ol_3 = "|_ _ _|"
-        i=0
-        while i < sq:
-            if i == 0:
-                print (sq * fl_0)
-                print (sq * fl_1)
-                print (sq * fl_2)
-                print (sq * fl_3)
-                i +=1
+        sq = int(math.sqrt(a))   
+        for i,elt in enumerate(_cells):
+            elt = str(elt[0])
+            if i == 0 :
+                labyrinthe_string = elt + " "
+            elif i == a-1:
+                labyrinthe_string += elt
+            elif (i + 1) % sq == 0:
+                labyrinthe_string += elt + "\n"
             else:
-                print (sq * ol_1)
-                print (sq * ol_2)
-                print (sq * ol_3)
-                i +=1
+                labyrinthe_string += elt + " "
+
+        print(labyrinthe_string)
 
         del _cells
     
     def moves(self,cells,objects):
         play = True
+        self.show(cells,objects)
         while play:
         
             arrow_getch= ord(msvcrt.getch())
@@ -161,34 +169,34 @@ class MacGyver:
             if arrow_getch == 224 and arrow_getche == 77:
 
                 self._n_position = (self.xy_position[0]+1, self.xy_position[1]+0)
-                self.check_position(cells)
+                play = self.check_position(cells)
                 self.check_objects(objects)
                 self.show(cells,objects)
-                print(self)
+                # print(self)
                
             # move down
             elif arrow_getch == 224 and arrow_getche == 80:
                 self._n_position = (self.xy_position[0]+0, self.xy_position[1]+1)
-                self.check_position(cells)
+                play = self.check_position(cells)
                 self.check_objects(objects)
                 self.show(cells,objects)
-                print(self)
+                # print(self)
                                  
             # move left        
             elif arrow_getch == 224 and arrow_getche == 75:
                 self._n_position = (self.xy_position[0]-1, self.xy_position[1]+ 0)
-                self.check_position(cells)
+                play = self.check_position(cells)
                 self.check_objects(objects)
                 self.show(cells,objects)
-                print(self)               
+                # print(self)               
                     
             # move up 
             elif arrow_getch == 224 and arrow_getche == 72:
                 self._n_position = (self.xy_position[0]+0, self.xy_position[1]-1)
-                self.check_position(cells)
+                play = self.check_position(cells)
                 self.check_objects(objects)
                 self.show(cells,objects)
-                print(self) 
+                # print(self) 
                                
             else:
                 play = False
@@ -198,16 +206,6 @@ class MacGyver:
         return "MacGyver se trouve se trouve à la postion: {}."\
         .format(self.xy_position)
 
-class Guard: 
-    
-    def __init__(self):
-        self.position = (0,0) 
-        self.image = "image"
-
-    def initial_position(self,valid_cells_dict):
-        for key, value in valid_cells_dict.items():
-            if value == "end":
-                self.position = key
 
 
 if __name__ == "__main__":
@@ -223,7 +221,9 @@ if __name__ == "__main__":
     # Step4 : Create objects  { position : (x,y), object name : 'Platic tube/Ether/Neddle'}
     Object.initialize_objects(Cell.CELLS)
     # object_list= [(elt.xy_position,elt.object_name) for elt in Object.OBJECTS]
-    
+    guard = Guard()
+    Guard.initial_position(guard,Cell.CELLS)
+
     player = MacGyver()
     MacGyver.initial_position(player,Cell.CELLS)
     MacGyver.moves(player, Cell.CELLS, Object.OBJECTS)

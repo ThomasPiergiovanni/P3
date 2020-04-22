@@ -28,41 +28,30 @@ def show__play(my_list):
     sq = math.sqrt(a)
     sq = int(sq)
     nb_ligne = a//sq
-    fl_0 = " _ _ _ "  
-    fl_1 = "|     |"  
-    fl_2 = "|  "+var+"  |" 
-    fl_3 = "|_ _ _|" 
+    fl_0 = " _ _ _  \n" + "|     |\n"
+    fl_1 = "|     |"  + "\n" 
+    fl_2 = "|  "+var+"  |" + "\n" 
+    fl_3 = "|_ _ _|" + "\n" 
     ol_1 = "|     |"  
     ol_2 = "|  "+var+"  |" 
     ol_3 = "|_ _ _|"
     i = 0
 
 
-    tableau =[]
-    for elt in my_list
-        var = [elt[0] for elt in my_list if elt[2]==i]
-        s_tab =[]
-        tableau.append(s_tab)
 
-    print (tableau)
-    for i,elt in enumerate(my_list):
-         if i < sq:
-             var = [elt[0] for elt in my_list if elt[2]==i]
-             var = var[0]
-             var =str(var)
-             fl_2 = "|  "+var+"  |"
-             tableauobj =fl_0,fl_1,fl_2,fl_3
-    #         print (fl_0)
-    #         print (fl_1)
-    #         print (fl_2)
-    #         print (fl_3)
- 
-            # else:
-            #     ol_2 = "|  "+var+"  |"
-            #     print (sq * ol_1)
-            #     print (sq * ol_2)
-            #     print (sq * ol_3)
-            #     n += 1
+    tableau =[]
+
+    for i, elt in enumerate(my_list):
+        # print (elt)
+        elt = elt[0]
+        elt = str(elt)
+        fl_2 = "|  "+elt+"  |" + "\n" 
+        tableauobj =fl_0,fl_1,fl_2,fl_3
+        tableau.append(tableauobj)
+        print(tableauobj)
+
+    # for elt in tableau:
+    #     print(elt)
 
 
 
