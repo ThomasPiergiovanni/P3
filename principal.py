@@ -1,21 +1,17 @@
+#-*-coding:utf-8 -*
 import os             
 import msvcrt # to get keyboard arrow interaction
 import random
 import logging as lg # to get debug functionnalities
 import math
-
 import analysis.input_data as a_id # import source data
-
 lg.basicConfig(level=lg.INFO)
 
-# Class of cells composing the labyrinthe grid (i.e CELLS)
-class Cell:
-    
-    #class variable
 
+# Class of 'cells' composing the labyrinthe grid (i.e CELLS)
+class Cell:
     GRID_DIM = 15 #number of cells composing each side of the labyrinth grid (ie. labyrinthe grid is a square)
-    CELLS=[]
-    
+    CELLS=[]  
     def __init__(self,xy_position,index_position,cell_type,):
         self.xy_position = xy_position    # (x, y) tuple
         self.index_position = index_position    # index in CELLS. NB not sur I'll need it
@@ -30,12 +26,11 @@ class Cell:
             cell = Cell((x,y),i,elt)
             cls.CELLS.append(cell)
 
-# Class of objects to pick up in the labyrinthe grid (i.e CELLS)
-class Object: 
-    
+
+# Class of 'objects' to pick up in the labyrinthe grid (i.e CELLS)
+class Object:    
     OBJ = ["Needle","Plastic tube","Ether"]
     OBJECTS = []
-    
     def __init__(self,xy_position,index,cells_index,name):
         self.xy_position = xy_position
         self.index = index
@@ -43,7 +38,8 @@ class Object:
         self.object_name = name 
         self.image = "image"
     
-    # class method to generate objects intsances. Instances will be randomly positionned on a appropriate/valid cell
+    # class method to generate objects instances. Instances will be randomly 
+    # positionned on a appropriate/valid cell
     @classmethod
     def initialize_objects(cls,cells): 
         for i,name in enumerate(cls.OBJ):
@@ -55,24 +51,23 @@ class Object:
             objekt = Object(xy_position,index, cells_index,name)
             cls.OBJECTS.append(objekt)
 
+
 # Class of the Guard who restrict escape from the labyrinthe grid (i.e CELLS)
-class Guard: 
-    
+class Guard:    
     def __init__(self):
         self.position = (0,0) 
         self.image = "image"
-
+        
     # method to set Guard position on the appropriate cell
     def initial_position(self,cells):
         xy_position = [elt.xy_position  for elt in cells if elt.cell_type == "end"]
         self.xy_position = xy_position[0]
         index_position = [elt.index_position  for elt in cells if elt.cell_type == "end"] # index in CELLS. NB not sur I'll need it
         self.index_position =index_position[0] 
+
  
 # Class of MacGyver. He will move on the lab, pick up objects and find the exit           
-class MacGyver: 
-
-    
+class MacGyver:   
     def __init__(self):
         self.xy_position = (0,0)
         self.index_position = "position"
@@ -230,7 +225,7 @@ if __name__ == "__main__":
     player = MacGyver()
     MacGyver.initial_position(player,Cell.CELLS)
 
-    #Step6 : Control macgyver moves, create the wanted action and views.
+    #Step6 : Control macgyver moves, create the wanted actions and view.
     MacGyver.moves(player, Cell.CELLS, Object.OBJECTS)
 
 os.system("pause")
