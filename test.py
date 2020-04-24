@@ -1,6 +1,7 @@
 # coding: utf-8
 import pygame
 import random
+import math
 
 #initilaize pygame
 pygame.init()
@@ -13,6 +14,9 @@ pygame.display.set_caption("Space Invaders")
 icon = pygame.image.load ('data/ressource/MacGyver.png')
 pygame.display.set_icon(icon)
 
+#Background
+background = pygame.image.load('data/space.png')
+
 #Player
 playerImg = pygame.image.load('data/spaceship.png')
 playerX = 370 # position vs screen width
@@ -23,8 +27,21 @@ playerX_change = 0
 ennemyImg = pygame.image.load('data/alien.png')
 ennemyX = random.randint(0, 736) # position vs screen width
 ennemyY = random.randint(50, 150) # position vs screen height
-ennemyX_change = 0.3
+ennemyX_change = 2
 ennemyY_change = 40
+
+#Bullet
+
+#ready - you can't see the bullet on the screen
+#fire - the bullet is currentely moving
+bulletImg = pygame.image.load('data/bullet.png')
+bulletX = 0 
+bulletY = 480
+bulletX_change = 0
+bulletY_change = 6
+bullet_state = "ready"
+
+score = 0
 
 def player(x,y):
     #method to draw the player on screen
@@ -38,12 +55,26 @@ def ennemy(x,y):
     y = int(y)
     screen.blit(ennemyImg, (x,y))
 
+def fire_bullet (x,y):
+    global bullet_state
+    bullet_state ="fire"
+    screen.blit(bulletImg,(x + 16,y + 10))
+
+def is_collision(x1,x2,y1,y2):
+    distance = math.sqrt(math.pow(x2-x1,2) + math.pow(y2-y1,2))
+    if distance < 27:
+        return True
+    else:
+        return False
 # Create the Game loop
 running = True
 while running:
 
     #RGB - Red, Green, Blue, for screen color
     screen.fill((0,0,0))    # 0 0 0 is black
+
+    #backgoiund image
+    screen.blit(background,(0,0))
 
     for event in pygame.event.get(): #takes all event happening in pygame
         if event.type == pygame.QUIT: # if the event is quit, programms will shut
@@ -52,9 +83,13 @@ while running:
         #if keystroke is pressed, check wheteher right or left
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
-                playerX_change = -0.3
+                playerX_change = -3
             if event.key == pygame.K_RIGHT:
-                playerX_change = 0.3
+                playerX_change = 3
+            if event.key == pygame.K_SPACE:
+                if bullet_state == "ready":
+                    bulletX = playerX
+                    fire_bullet(bulletX, bulletY)
 
         #if keystroke is released, check wheteher right or left
         if event.type == pygame.KEYUP:
@@ -69,16 +104,36 @@ while running:
         playerX = 0
     elif playerX >= 736:     #we substarct  the zize of the image
         playerX = 736
-    #call the function (ie that draw the player)
-    player(playerX, playerY)
+
 
     #ennemy movement
     ennemyX += ennemyX_change
 
     if ennemyX < 0:
-        ennemyX_change = 0.3
+        ennemyX_change = 2
+        ennemyY += 40 # to make the enemy come down
     elif ennemyX >= 736:     #we substarct  the zize of the image
-        ennemyX_change = -0.3
+        ennemyX_change = -2
+        ennemyY += 40
+
+    #bullet movement
+    if bulletY <= -32 :
+        bulletY =480
+        bullet_state = "ready"
+    if bullet_state == "fire":
+        fire_bullet(bulletX, bulletY)
+        bulletY -= bulletY_change
+
+    #collision
+    collision = is_collision(ennemyX,bulletX,ennemyY,bulletY)
+    if collision:
+        bulletY = 480 
+        bullet_state = "ready"
+        score += 1
+        print(score)
+        ennemyX = random.randint(0, 736) # position vs screen width
+        ennemyY = random.randint(50, 150) # position vs screen height
+
     #call the function (ie that draw the player)
     player(playerX, playerY)
     ennemy(ennemyX, ennemyY)
