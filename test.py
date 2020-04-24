@@ -1,5 +1,6 @@
 # coding: utf-8
 import pygame
+import random
 
 #initilaize pygame
 pygame.init()
@@ -18,9 +19,24 @@ playerX = 370 # position vs screen width
 playerY = 480 # position vs screen height
 playerX_change = 0
 
+#Ennemy
+ennemyImg = pygame.image.load('data/alien.png')
+ennemyX = random.randint(0, 736) # position vs screen width
+ennemyY = random.randint(50, 150) # position vs screen height
+ennemyX_change = 0.3
+ennemyY_change = 40
+
 def player(x,y):
     #method to draw the player on screen
+    x = int(x)
+    y = int (y)
     screen.blit(playerImg, (x,y))
+
+def ennemy(x,y):
+    #method to draw the player on screen
+    x = int(x)
+    y = int(y)
+    screen.blit(ennemyImg, (x,y))
 
 # Create the Game loop
 running = True
@@ -51,10 +67,21 @@ while running:
     #prohibits player to go out of the screen
     if playerX < 0:
         playerX = 0
-    elif playerX > 736:     #we substarct  the zize of the image
+    elif playerX >= 736:     #we substarct  the zize of the image
         playerX = 736
     #call the function (ie that draw the player)
     player(playerX, playerY)
+
+    #ennemy movement
+    ennemyX += ennemyX_change
+
+    if ennemyX < 0:
+        ennemyX_change = 0.3
+    elif ennemyX >= 736:     #we substarct  the zize of the image
+        ennemyX_change = -0.3
+    #call the function (ie that draw the player)
+    player(playerX, playerY)
+    ennemy(ennemyX, ennemyY)
 
     #to display the changes of this 'screen' ie screen vairable
     pygame.display.update()
