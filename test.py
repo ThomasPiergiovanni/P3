@@ -1,62 +1,60 @@
 # coding: utf-8
+import pygame
 
-import math
+#initilaize pygame
+pygame.init()
 
-# my_li=[["W","xy",0],0,0,1,1,1,2,2,2]
-my_li=[
-    ["W","xy",0],
-    ["S","xy",1],
-    ["X","xy",2],
-    ["T","xy",3],
-    ["W","xy",4],
-    ["W","xy",5],
-    ["F","xy",6],
-    ["W","xy",7],
-    ["W","xy",8]
-    ]
+#create the screen
+screen = pygame.display.set_mode((800,600)) #width (X), height(Y)
 
-my_grid =[[["---"],["---"],["---"],["---"],["-B-"],["---"],["---"],["---"],["---"]]]
+#Title and icon
+pygame.display.set_caption("Space Invaders")
+icon = pygame.image.load ('data/ressource/MacGyver.png')
+pygame.display.set_icon(icon)
 
-a="---"
-b="-V-"
-c="---"
+#Player
+playerImg = pygame.image.load('data/spaceship.png')
+playerX = 370 # position vs screen width
+playerY = 480 # position vs screen height
+playerX_change = 0
 
+def player(x,y):
+    #method to draw the player on screen
+    screen.blit(playerImg, (x,y))
 
-def show__play(my_list):
-    a = len(my_list)
-    var= "M"
-    sq = math.sqrt(a)
-    sq = int(sq)
-    nb_ligne = a//sq
-    fl_0 = " _ _ _  \n" + "|     |\n"
-    fl_1 = "|     |"  + "\n" 
-    fl_2 = "|  "+var+"  |" + "\n" 
-    fl_3 = "|_ _ _|" + "\n" 
-    ol_1 = "|     |"  
-    ol_2 = "|  "+var+"  |" 
-    ol_3 = "|_ _ _|"
-    i = 0
+# Create the Game loop
+running = True
+while running:
 
+    #RGB - Red, Green, Blue, for screen color
+    screen.fill((0,0,0))    # 0 0 0 is black
 
+    for event in pygame.event.get(): #takes all event happening in pygame
+        if event.type == pygame.QUIT: # if the event is quit, programms will shut
+            running = False
 
-    tableau =[]
+        #if keystroke is pressed, check wheteher right or left
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                playerX_change = -0.3
+            if event.key == pygame.K_RIGHT:
+                playerX_change = 0.3
 
-    for i, elt in enumerate(my_list):
-        # print (elt)
-        elt = elt[0]
-        elt = str(elt)
-        fl_2 = "|  "+elt+"  |" + "\n" 
-        tableauobj =fl_0,fl_1,fl_2,fl_3
-        tableau.append(tableauobj)
-        print(tableauobj)
+        #if keystroke is released, check wheteher right or left
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
+                playerX_change = 0
 
-    # for elt in tableau:
-    #     print(elt)
+    #change the x cordinate as per ketstroke done
+    playerX += playerX_change
 
+    #prohibits player to go out of the screen
+    if playerX < 0:
+        playerX = 0
+    elif playerX > 736:     #we substarct  the zize of the image
+        playerX = 736
+    #call the function (ie that draw the player)
+    player(playerX, playerY)
 
-
-show__play(my_li)
-
-
-
-# print (stri)
+    #to display the changes of this 'screen' ie screen vairable
+    pygame.display.update()
