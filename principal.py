@@ -1,21 +1,35 @@
 #-*-coding:utf-8 -*
 import os             
-import msvcrt # to get keyboard arrow interaction
+#import msvcrt # to get keyboard arrow interaction
 import random
 import logging as lg # to get debug functionnalities
 import math
 import analysis.input_data as a_id # import source data
 lg.basicConfig(level=lg.INFO)
 
+import pygame
+
+#PG initilaize pygame
+pygame.init()
+
+#PG Define screen
+screen = pygame.display.set_mode((300,300)) #width (X), height(Y)
+
+#PG Title and icon
+pygame.display.set_caption("Mac Gyver")
+icon = pygame.image.load ('data/ressource/MacGyver.png')
+pygame.display.set_icon(icon)
+
 
 # Class of 'cells' composing the labyrinthe grid (i.e CELLS)
 class Cell:
     GRID_DIM = 15 #number of cells composing each side of the labyrinth grid (ie. labyrinthe grid is a square)
     CELLS=[]  
-    def __init__(self,xy_position,index_position,cell_type,):
+    def __init__(self,xy_position,index_position,cell_type):
         self.xy_position = xy_position    # (x, y) tuple
         self.index_position = index_position    # index in CELLS. NB not sur I'll need it
         self.cell_type = cell_type  # type of cell (ie: path, wall, objects, start , end, etc.)
+        # self.cell_image = image
 
     # class method to generate cell instances that will be stored into CELLS list   
     @classmethod
@@ -23,6 +37,10 @@ class Cell:
         for i,elt in enumerate(input_list):
             x = i % cls.GRID_DIM
             y = i // cls.GRID_DIM
+            # if elt == "wall":
+            #     image = pygame.image.load('data/wall32.png')
+            # else:
+            #     image = 'image'
             cell = Cell((x,y),i,elt)
             cls.CELLS.append(cell)
 
@@ -72,7 +90,7 @@ class MacGyver:
         self.xy_position = (0,0)
         self.index_position = "position"
         self.name = "MacGyver"
-        self.image = "image"
+        self.image = pygame.image.load ('data/ressource/MacGyver.png')
         self.collected_objects =[]
 
     # method to set MacGyver position on the appropriate cell
@@ -81,130 +99,142 @@ class MacGyver:
         self.xy_position = xy_position[0]
         index_position = [elt.index_position  for elt in cells if elt.cell_type == "start"] # index in CELLS. NB not sur I'll need it
         self.index_position =index_position[0]
+        return self
 
-    # Check if MacGyver new position is OK (not a wall), if he reached the end with all collected objects or not
-    def check_position(self,cells): 
-        xy_position = [elt.xy_position for elt in cells if elt.xy_position == self._n_position and elt.cell_type != "wall" ]
-        if xy_position:
-            self.xy_position = xy_position[0]
-            for elt in cells:
-                if self.xy_position == elt.xy_position and elt.cell_type == "end" and len(self.collected_objects) == 3:
-                    print("YOU WIN!!!")
-                    play = False
-                    return play
-                if self.xy_position == elt.xy_position and elt.cell_type == "end" and len(self.collected_objects) < 3:
-                    print("GAME OVER \nYou did not collect all objects!!!")
-                    play = False
-                    return play
-        play = True
-        return play
 
-    # Check if MacGyver new position is where an object is. If yes he put it in his bag. 
-    def check_objects(self, objects):
-        for i, elt in enumerate (objects):
-            if elt.xy_position== self._n_position:
-                object_name = elt.object_name
-                self.collected_objects.append(object_name)
-                del objects[i]
+def keyboard(game_is_on,player):
 
-    # Show the labyrinthe.
-    def show (self,cells,objects):
-        _cells = [] # create a temporary grid for display display purpose
-        for elt in cells:
-            if elt.xy_position == self.xy_position: # if Mac is here , this cell will reflect that
-                _show_type = self.name
-                _show_xy = elt.xy_position
-                _show_index = elt.index_position
-                _cells.append([_show_type,_show_xy,_show_index])
-            else:   # if Mac is not there , this cell will reflect the original grid
-                _show_type = elt.cell_type
-                _show_xy = elt.xy_position
-                _show_index = elt.index_position
-                _cells.append([_show_type,_show_xy,_show_index])
 
-        for _elt in _cells:     # The new temporary labyrinthe grid 
-            for obj in objects:     # if Object is here , this cell will reflect that
-                if _elt[1] == obj.xy_position:
-                    _elt[0] = obj.object_name
+    screen.fill((0,0,0))
+    new_position = player.xy_position
+    for event in pygame.event.get(): #takes all event happening in pygame
+        if event.type == pygame.QUIT: # if the event is quit, programms will shut
+            game_is_on = False
 
-        # Change temporary labyrinthe grids value for siplay purposes (in terminal, one letter as dimmension 1:1. ok for grid display)
-        for _elt in _cells:  
-            if _elt[0] == "start":
-                _elt [0] = "S" 
-            elif _elt[0] == "end":
-                _elt [0] = "E" 
-            elif _elt[0] == "wall":
-                _elt [0] = "X"
-            elif _elt[0] == "path":
-                _elt [0] = " "
-            elif _elt[0] == "MacGyver":
-                _elt [0] = "M"
-            else:
-                _elt [0] = "o"
-
-        # Create the labyrinthe view
-        a = len(_cells)
-        sq = int(math.sqrt(a))   
-        for i,elt in enumerate(_cells):
-            elt = str(elt[0])
-            if i == 0 :
-                labyrinthe_string = elt + " "
-            elif i == a-1:
-                labyrinthe_string += elt
-            elif (i + 1) % sq == 0:
-                labyrinthe_string += elt + "\n"
-            else:
-                labyrinthe_string += elt + " "
-
-        print(labyrinthe_string)
-        del _cells
-    
-    # Initiate actions based on MacGyver moves
-    def moves(self,cells,objects):
-        play = True
-        self.show(cells,objects)
-        while play:
-            
-            # get keyboard keys
-            arrow_getch= ord(msvcrt.getch())
-            arrow_getche = ord(msvcrt.getche())
+    # get keyboard keys
+        if event.type == pygame.KEYDOWN:
             
             # move right
-            if arrow_getch == 224 and arrow_getche == 77:
-
-                self._n_position = (self.xy_position[0]+1, self.xy_position[1]+0)
-                play = self.check_position(cells)
-                self.check_objects(objects)
-                self.show(cells,objects)
-                # print(self)
+            if event.key == pygame.K_RIGHT:
+                new_position = (player.xy_position[0]+1, player.xy_position[1]+0)
                
             # move down
-            elif arrow_getch == 224 and arrow_getche == 80:
-                self._n_position = (self.xy_position[0]+0, self.xy_position[1]+1)
-                play = self.check_position(cells)
-                self.check_objects(objects)
-                self.show(cells,objects)
-                # print(self)
+            if event.key == pygame.K_DOWN:
+                new_position = (player.xy_position[0]+0, player.xy_position[1]+1)
                                  
             # move left        
-            elif arrow_getch == 224 and arrow_getche == 75:
-                self._n_position = (self.xy_position[0]-1, self.xy_position[1]+ 0)
-                play = self.check_position(cells)
-                self.check_objects(objects)
-                self.show(cells,objects)
-                # print(self)               
-                    
-            # move up 
-            elif arrow_getch == 224 and arrow_getche == 72:
-                self._n_position = (self.xy_position[0]+0, self.xy_position[1]-1)
-                play = self.check_position(cells)
-                self.check_objects(objects)
-                self.show(cells,objects)
-                # print(self) 
-                               
-            else:
-                play = False
+            if event.key == pygame.K_LEFT:
+                new_position = (player.xy_position[0]-1, player.xy_position[1]+ 0)  
 
+            # move up 
+            if event.key == pygame.K_UP:
+                new_position = (player.xy_position[0]+0, player.xy_position[1]-1)
+
+        #if keystroke is released, check wheteher right or left
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_RIGHT or event.key == pygame.K_DOWN or event.key == pygame.K_LEFT or event.key == pygame.K_UP:
+                new_position = (player.xy_position[0], player.xy_position[1])
+
+    return new_position, game_is_on
+            
+
+# Check if MacGyver new position is OK (not a wall), if he reached the end with all collected objects or not
+def check_player_position(game_is_on,new_position,player,cells):
+    xy_position = [elt.xy_position for elt in cells if elt.xy_position == new_position and elt.cell_type != "wall" ]
+    if xy_position:
+        player.xy_position = xy_position[0]
+        for elt in cells:
+            if player.xy_position == elt.xy_position and elt.cell_type == "end" and len(player.collected_objects) == 3:
+                print("YOU WIN!!!")
+                game_is_on = False
+            if player.xy_position == elt.xy_position and elt.cell_type == "end" and len(player.collected_objects) < 3:
+                print("GAME OVER \nYou did not collect all objects!!!")
+                game_is_on = False
+    return game_is_on, player
+
+# Check if MacGyver new position is where an object is. If yes he put it in his bag. 
+def check_objects(player,new_position, objects):
+    for i, elt in enumerate (objects):
+        if elt.xy_position == new_position:
+            object_name = elt.object_name
+            player.collected_objects.append(object_name)
+            del objects[i]
+    return player
+
+# Show the labyrinthe.
+def show_in_command_line_console (player,cells,objects):
+    _cells = [] # create a temporary grid for display display purpose
+    for elt in cells:
+        if elt.xy_position == player.xy_position: # if Mac is here , this cell will reflect that
+            _show_type = player.name
+            _show_xy = elt.xy_position
+            _show_index = elt.index_position
+            _cells.append([_show_type,_show_xy,_show_index])
+        else:   # if Mac is not there , this cell will reflect the original grid
+            _show_type = elt.cell_type
+            _show_xy = elt.xy_position
+            _show_index = elt.index_position
+            _cells.append([_show_type,_show_xy,_show_index])
+
+    for _elt in _cells:     # The new temporary labyrinthe grid 
+        for obj in objects:     # if Object is here , this cell will reflect that
+            if _elt[1] == obj.xy_position:
+                _elt[0] = obj.object_name
+
+    # Change temporary labyrinthe grids value for display purposes (in terminal, one letter as dimmension 1:1. ok for grid display)
+    for _elt in _cells:  
+        if _elt[0] == "start":
+            _elt [0] = "S" 
+        elif _elt[0] == "end":
+            _elt [0] = "E" 
+        elif _elt[0] == "wall":
+            _elt [0] = "X"
+        elif _elt[0] == "path":
+            _elt [0] = " "
+        elif _elt[0] == "MacGyver":
+            _elt [0] = "M"
+        else:
+            _elt [0] = "o"
+
+    # Create the labyrinthe view
+    a = len(_cells)
+    sq = int(math.sqrt(a))   
+    for i,elt in enumerate(_cells):
+        elt = str(elt[0])
+        if i == 0 :
+            labyrinthe_string = elt + " "
+        elif i == a-1:
+            labyrinthe_string += elt
+        elif (i + 1) % sq == 0:
+            labyrinthe_string += elt + "\n"
+        else:
+            labyrinthe_string += elt + " "
+
+    print(labyrinthe_string)
+    del _cells
+    
+# Display in Pygames
+def show_in_pygame (player,cells,objects):
+
+
+    
+    #PG to display the changes of this 'screen' ie screen vairable
+    pygame.display.update()
+        
+
+def play(player,cells,objects):
+    game_is_on = True
+    # show_in_command_line_console(player,cells,objects)
+    while game_is_on:
+
+        new_position, game_is_on = keyboard(game_is_on, player)
+        if game_is_on:
+            game_is_on,player = check_player_position(game_is_on,new_position,player,cells)
+            player = check_objects(player,new_position,objects)
+            # show_in_command_line_console(player,cells,objects)
+            # show_in_pygame(player,cells,objects)
+
+    print("programms ending")
 
 if __name__ == "__main__":
 
@@ -223,9 +253,9 @@ if __name__ == "__main__":
 
     # Step5 : Generate macgyver instances
     player = MacGyver()
-    MacGyver.initial_position(player,Cell.CELLS)
+    player_set = MacGyver.initial_position(player,Cell.CELLS)
 
     #Step6 : Control macgyver moves, create the wanted actions and view.
-    MacGyver.moves(player, Cell.CELLS, Object.OBJECTS)
+    play(player_set, Cell.CELLS, Object.OBJECTS)
 
 os.system("pause")
