@@ -6,7 +6,6 @@ import math
 #initilaize pygame
 pygame.init()
 
-#create the screen
 screen = pygame.display.set_mode((800,600)) #width (X), height(Y)
 
 #Title and icon
@@ -16,6 +15,14 @@ pygame.display.set_icon(icon)
 
 #Background
 background = pygame.image.load('data/space.png')
+
+#Background sounds
+mixer.music.load('xxx.wav')
+mixer.music.play(-1) # - 1 will make teh music plays continuously
+
+#Bullet sound
+bullet_sound = mixer.sound('zzz.wav')
+bullet _sound = bullet_sound.play() 
 
 #Player
 playerImg = pygame.image.load('data/spaceship.png')
@@ -41,7 +48,15 @@ bulletX_change = 0
 bulletY_change = 6
 bullet_state = "ready"
 
-score = 0
+#Score
+score_value = 0
+font = pygame.font.Font('freesansbold.ttf', 32)
+textX = 10
+textY = 10
+
+def show_score(x,y):
+    score = font.render("Score :" + str(score_value),True, (255,255,255))
+    screen.blit(score, (x,y))
 
 def player(x,y):
     #method to draw the player on screen
@@ -129,14 +144,14 @@ while running:
     if collision:
         bulletY = 480 
         bullet_state = "ready"
-        score += 1
-        print(score)
+        score_value += 1
         ennemyX = random.randint(0, 736) # position vs screen width
         ennemyY = random.randint(50, 150) # position vs screen height
 
     #call the function (ie that draw the player)
     player(playerX, playerY)
     ennemy(ennemyX, ennemyY)
+    show_score(textX,textY)
 
     #to display the changes of this 'screen' ie screen vairable
     pygame.display.update()
