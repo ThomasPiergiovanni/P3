@@ -13,7 +13,7 @@ import pygame
 pygame.init()
 
 #PG Define screen
-screen = pygame.display.set_mode((300,300)) #width (X), height(Y)
+screen = pygame.display.set_mode((480,480)) #width (X), height(Y)
 
 #PG Title and icon
 pygame.display.set_caption("Mac Gyver")
@@ -25,11 +25,11 @@ pygame.display.set_icon(icon)
 class Cell:
     GRID_DIM = 15 #number of cells composing each side of the labyrinth grid (ie. labyrinthe grid is a square)
     CELLS=[]  
-    def __init__(self,xy_position,index_position,cell_type):
+    def __init__(self,xy_position,index_position,cell_type,image):
         self.xy_position = xy_position    # (x, y) tuple
         self.index_position = index_position    # index in CELLS. NB not sur I'll need it
         self.cell_type = cell_type  # type of cell (ie: path, wall, objects, start , end, etc.)
-        # self.cell_image = image
+        self.cell_image = image
 
     # class method to generate cell instances that will be stored into CELLS list   
     @classmethod
@@ -37,11 +37,14 @@ class Cell:
         for i,elt in enumerate(input_list):
             x = i % cls.GRID_DIM
             y = i // cls.GRID_DIM
-            # if elt == "wall":
-            #     image = pygame.image.load('data/wall32.png')
-            # else:
-            #     image = 'image'
-            cell = Cell((x,y),i,elt)
+            if elt == "wall":
+                image = pygame.image.load('data/wall32.png')
+            elif elt == "start":
+                image = pygame.image.load('data/start32.png')
+            else:
+                image = pygame.image.load('data/path32.png')
+ 
+            cell = Cell((x,y),i,elt,image)
             cls.CELLS.append(cell)
 
 
@@ -49,12 +52,12 @@ class Cell:
 class Object:    
     OBJ = ["Needle","Plastic tube","Ether"]
     OBJECTS = []
-    def __init__(self,xy_position,index,cells_index,name):
+    def __init__(self,xy_position,index,cells_index,name ,image):
         self.xy_position = xy_position
         self.index = index
         self.cells_index =cells_index
         self.object_name = name 
-        self.image = "image"
+        self.image = image
     
     # class method to generate objects instances. Instances will be randomly 
     # positionned on a appropriate/valid cell
@@ -66,7 +69,13 @@ class Object:
             xy_position = rand_cell.xy_position
             index = i
             cells_index = rand_cell.index_position
-            objekt = Object(xy_position,index, cells_index,name)
+            if name == "Ether":
+                image = pygame.image.load('data/ether32.png')
+            if name == "Plastic tube":
+                image = pygame.image.load('data/pipe32.png')
+            if name == "Needle":
+                image = pygame.image.load('data/needle32.png')
+            objekt = Object(xy_position,index, cells_index,name, image)
             cls.OBJECTS.append(objekt)
 
 
@@ -74,7 +83,7 @@ class Object:
 class Guard:    
     def __init__(self):
         self.position = (0,0) 
-        self.image = "image"
+        self.image = pygame.image.load('data/gardien32.png')
         
     # method to set Guard position on the appropriate cell
     def initial_position(self,cells):
@@ -90,7 +99,7 @@ class MacGyver:
         self.xy_position = (0,0)
         self.index_position = "position"
         self.name = "MacGyver"
-        self.image = pygame.image.load ('data/ressource/MacGyver.png')
+        self.image = pygame.image.load ('data/macgyver32.png')
         self.collected_objects =[]
 
     # method to set MacGyver position on the appropriate cell
@@ -214,15 +223,31 @@ def show_in_command_line_console (player,cells,objects):
     del _cells
     
 # Display in Pygames
-def show_in_pygame (player,cells,objects):
+def show_in_pygame (player,cells,objects,guard):
 
+    for cell in cells:
+        x = cell.xy_position[0] *32
+        y = cell.xy_position[1] *32
+        screen.blit(cell.cell_image, (x,y))
 
+    for obj in objects:
+        x = obj.xy_position[0] *32
+        y = obj.xy_position[1] *32
+        screen.blit(obj.image, (x,y))
+    
+    x = guard.xy_position[0] *32
+    y = guard.xy_position[1] *32
+    screen.blit(guard.image, (x,y))
+
+    x = player.xy_position[0] *32
+    y = player.xy_position[1] *32
+    screen.blit(player.image, (x,y))
     
     #PG to display the changes of this 'screen' ie screen vairable
     pygame.display.update()
         
 
-def play(player,cells,objects):
+def play(player,cells,objects,guard):
     game_is_on = True
     # show_in_command_line_console(player,cells,objects)
     while game_is_on:
@@ -231,8 +256,7 @@ def play(player,cells,objects):
         if game_is_on:
             game_is_on,player = check_player_position(game_is_on,new_position,player,cells)
             player = check_objects(player,new_position,objects)
-            # show_in_command_line_console(player,cells,objects)
-            # show_in_pygame(player,cells,objects)
+            show_in_pygame(player,cells,objects,guard)
 
     print("programms ending")
 
@@ -256,6 +280,6 @@ if __name__ == "__main__":
     player_set = MacGyver.initial_position(player,Cell.CELLS)
 
     #Step6 : Control macgyver moves, create the wanted actions and view.
-    play(player_set, Cell.CELLS, Object.OBJECTS)
+    play(player_set, Cell.CELLS, Object.OBJECTS, guard)
 
 os.system("pause")
