@@ -1,5 +1,5 @@
-#-*-coding:utf-8 -*
-import os             
+#-*-coding:utf-8 -*  
+import os          
 #import msvcrt # to get keyboard arrow interaction
 import random
 import logging as lg # to get debug functionnalities
@@ -25,9 +25,8 @@ pygame.display.set_icon(icon)
 class Cell:
     GRID_DIM = 15 #number of cells composing each side of the labyrinth grid (ie. labyrinthe grid is a square)
     CELLS=[]  
-    def __init__(self,xy_position,index_position,cell_type,image):
+    def __init__(self,xy_position,cell_type,image):
         self.xy_position = xy_position    # (x, y) tuple
-        self.index_position = index_position    # index in CELLS. NB not sur I'll need it
         self.cell_type = cell_type  # type of cell (ie: path, wall, objects, start , end, etc.)
         self.cell_image = image
 
@@ -43,8 +42,7 @@ class Cell:
                 image = pygame.image.load('data/start32.png')
             else:
                 image = pygame.image.load('data/path32.png')
- 
-            cell = Cell((x,y),i,elt,image)
+            cell = Cell((x,y),elt,image)
             cls.CELLS.append(cell)
 
 
@@ -52,10 +50,8 @@ class Cell:
 class Object:    
     OBJ = ["Needle","Plastic tube","Ether"]
     OBJECTS = []
-    def __init__(self,xy_position,index,cells_index,name ,image):
+    def __init__(self,xy_position,name,image):
         self.xy_position = xy_position
-        self.index = index
-        self.cells_index =cells_index
         self.object_name = name 
         self.image = image
     
@@ -67,15 +63,13 @@ class Object:
             valid_cells = [elt for elt in cells if elt.cell_type == "path"]
             rand_cell = random.choice(valid_cells)
             xy_position = rand_cell.xy_position
-            index = i
-            cells_index = rand_cell.index_position
             if name == "Ether":
                 image = pygame.image.load('data/ether32.png')
             if name == "Plastic tube":
                 image = pygame.image.load('data/pipe32.png')
             if name == "Needle":
                 image = pygame.image.load('data/needle32.png')
-            objekt = Object(xy_position,index, cells_index,name, image)
+            objekt = Object(xy_position,name, image)
             cls.OBJECTS.append(objekt)
 
 # Class of the Guard who restrict escape from the labyrinthe grid (i.e CELLS)
@@ -88,16 +82,11 @@ class Guard:
     def initial_position(self,cells):
         xy_position = [elt.xy_position  for elt in cells if elt.cell_type == "end"]
         self.xy_position = xy_position[0]
-        index_position = [elt.index_position  for elt in cells if elt.cell_type == "end"] # index in CELLS. NB not sur I'll need it
-        self.index_position =index_position[0] 
 
- 
 # Class of MacGyver. He will move on the lab, pick up objects and find the exit           
 class MacGyver:   
     def __init__(self):
         self.xy_position = (0,0)
-        self.index_position = "position"
-        self.name = "MacGyver"
         self.image = pygame.image.load ('data/macgyver32.png')
         self.collected_objects = []
 
@@ -105,13 +94,10 @@ class MacGyver:
     def initial_position(self,cells):
         xy_position = [elt.xy_position  for elt in cells if elt.cell_type == "start"]
         self.xy_position = xy_position[0]
-        index_position = [elt.index_position  for elt in cells if elt.cell_type == "start"] # index in CELLS. NB not sur I'll need it
-        self.index_position =index_position[0]
+
         return self
 
 def keyboard(game_is_on,player):
-
-
 
     new_position = player.xy_position
     for event in pygame.event.get(): #takes all event happening in pygame
@@ -154,7 +140,6 @@ def check_player_position(game_is_on,new_position,player,cells):
                 game_status= "lost"
                 game_is_on = False
 
-    print (game_status)
     return game_is_on, player,game_status
 
 # Check if MacGyver new position is where an object is. If yes he put it in his bag. 
@@ -326,29 +311,5 @@ if __name__ == "__main__":
 
     #Step6 : Control macgyver moves, create the wanted actions and view.
     play(player_set, Cell.CELLS, Object.OBJECTS, guard)
-
-# def main():
-
-#     # Step 1: get source into this module
-#     content_ready = a_id.main('labyrinthe.txt')
-
-#     # Step 2: Generate cell instances
-#     Cell.initialize_cells(content_ready)
-
-#     # Step3 : Generate objects instances
-#     Object.initialize_objects(Cell.CELLS)
-
-#     # Step4 : Generate guard instances
-#     guard = Guard()
-#     Guard.initial_position(guard,Cell.CELLS)
-
-#     # Step5 : Generate macgyver instances
-#     player = MacGyver()
-#     player_set = MacGyver.initial_position(player,Cell.CELLS)
-
-#     #Step6 : Control macgyver moves, create the wanted actions and view.
-#     play(player_set, Cell.CELLS, Object.OBJECTS, guard)
-
-# main()
 
 os.system("pause")
