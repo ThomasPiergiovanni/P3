@@ -8,13 +8,9 @@ lg.basicConfig(level=lg.INFO)
 
 import pygame
 
-#PG initilaize pygame
+
 pygame.init()
-
-#PG Define screen
 screen = pygame.display.set_mode((480,580)) #width (X), height(Y)
-
-#PG Title and icon
 pygame.display.set_caption("Mac Gyver")
 icon = pygame.image.load ('data/ressource/MacGyver.png')
 pygame.display.set_icon(icon)
@@ -83,6 +79,7 @@ class Guard:
         xy_position = [elt.xy_position  for elt in cells if elt.cell_type == "end"]
         self.xy_position = xy_position[0]
 
+
 # Class of MacGyver. He will move on the lab, pick up objects and find the exit           
 class MacGyver:   
     def __init__(self):
@@ -96,38 +93,30 @@ class MacGyver:
         self.xy_position = xy_position[0]
         return self
 
-#PG: Checks key board envents
+
 def keyboard(game_is_on,player):
 
     new_position = player.xy_position
-
     # enable pygame quit button
     for event in pygame.event.get():
         if event.type == pygame.QUIT: 
             game_is_on = False
-
     # get keyboard keys
         if event.type == pygame.KEYDOWN:
-            
             # move right
             if event.key == pygame.K_RIGHT:
                 new_position = (player.xy_position[0]+1, player.xy_position[1]+0)
-               
             # move down
             if event.key == pygame.K_DOWN:
-                new_position = (player.xy_position[0]+0, player.xy_position[1]+1)
-                                 
+                new_position = (player.xy_position[0]+0, player.xy_position[1]+1)                    
             # move left        
             if event.key == pygame.K_LEFT:
                 new_position = (player.xy_position[0]-1, player.xy_position[1]+ 0)  
-
             # move up 
             if event.key == pygame.K_UP:
                 new_position = (player.xy_position[0]+0, player.xy_position[1]-1)
-
     return new_position, game_is_on
             
-
 # Check if MacGyver new position is OK (not a wall), if he reached the
 # end with all collected objects or not
 def check_player_position(game_is_on,new_position,player,cells):
@@ -210,8 +199,8 @@ def show_in_command_line_console (player,cells,objects):
 
     print(labyrinthe_string)
     del _cells
-    
-# PG : Display in Pygames
+
+#Display in Pygames
 def show_in_pygame (player,cells,objects,guard,game_status):
 
     screen.fill((0,0,0))
@@ -293,7 +282,6 @@ def show_in_pygame (player,cells,objects,guard,game_status):
     #PG to display the changes of this 'screen' ie screen vairable
     pygame.display.update()
         
-
 def play(player,cells,objects,guard):
 
     game_is_on = True
