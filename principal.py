@@ -32,11 +32,11 @@ class Cell:
             x = i % cls.GRID_DIM
             y = i // cls.GRID_DIM
             if elt == "wall":
-                image = pygame.image.load('data/wall32.png')
+                image = pygame.image.load('data/wall32.png').convert_alpha()
             elif elt == "start":
-                image = pygame.image.load('data/start32.png')
+                image = pygame.image.load('data/start32.png').convert_alpha()
             else:
-                image = pygame.image.load('data/path32.png')
+                image = pygame.image.load('data/path32.png').convert_alpha()
             cell = Cell((x,y),elt,image)
             cls.CELLS.append(cell)
 
@@ -59,11 +59,11 @@ class Object:
             rand_cell = random.choice(valid_cells)
             xy_position = rand_cell.xy_position
             if name == "Ether":
-                image = pygame.image.load('data/ether32.png')
+                image = pygame.image.load('data/ether32.png').convert_alpha()
             if name == "Plastic tube":
-                image = pygame.image.load('data/pipe32.png')
+                image = pygame.image.load('data/pipe32.png').convert_alpha()
             if name == "Needle":
-                image = pygame.image.load('data/needle32.png')
+                image = pygame.image.load('data/needle32.png').convert_alpha()
             items = Object(xy_position,name, image)
             cls.OBJECTS.append(items)
 
@@ -72,7 +72,7 @@ class Object:
 class Guard:    
     def __init__(self):
         self.position = (0,0) 
-        self.image = pygame.image.load('data/gardien32.png')
+        self.image = pygame.image.load('data/gardien32.png').convert_alpha()
         
     # method to set Guard position on the appropriate cell
     def initial_position(self,cells):
@@ -84,7 +84,7 @@ class Guard:
 class MacGyver:   
     def __init__(self):
         self.xy_position = (0,0)
-        self.image = pygame.image.load ('data/macgyver32.png')
+        self.image = pygame.image.load ('data/macgyver32.png').convert_alpha()
         self.collected_objects = []
 
     # method to set MacGyver position on the appropriate cell
@@ -285,7 +285,9 @@ def show_in_pygame (player,cells,objects,guard,game_status):
 def play(player,cells,objects,guard):
 
     game_is_on = True
+    pygame.key.set_repeat(400, 30)
     while game_is_on:
+        pygame.time.Clock().tick(30)
         new_position, game_is_on = keyboard(game_is_on, player)
         if game_is_on:
             game_is_on,player,game_status = check_player_position(game_is_on, new_position,player,cells)
