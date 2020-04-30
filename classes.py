@@ -4,6 +4,7 @@ import random
 import pygame
 
 import references as ref
+import functions as functions
 
 class Grid:
     def __init__(self):
@@ -72,7 +73,6 @@ class Item(Objects):
 
     # class method to generate objects instances. Instances will be randomly 
     # positionned on a appropriate/valid cell
-
     def initialize_items(self,grid):
         rand_cell_list = []
         for i,name in enumerate(self.source_data):
@@ -117,4 +117,71 @@ class Guard:
         screen.blit(self.image,(x_display,y_display))
 
 
-# Class of MacGyver. He will move on the lab, pick up objects and find the exit
+# Class of MacGyver. He will move on the lab, pick up objects and find the exit           
+class MacGyver:   
+    def __init__(self):
+        self.xy_position = (0,0)
+        self.image = pygame.image.load ('data/macgyver32.png').convert_alpha()
+        self.collected_objects = []
+
+    # method to set MacGyver position on the appropriate cell
+    def initial_position(self,grid):
+        xy_position = [elt.xy_position  for elt in grid.cells if\
+         elt.cell_type == 2]
+        self.xy_position = xy_position[0]
+
+    def show_mac_gyver(self,screen):
+        x_display = self.xy_position[0] *32
+        y_display = self.xy_position[1] *32
+        screen.blit(self.image,(x_display,y_display))
+
+    def moves(self,grid):
+        new_position = 0
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT: 
+                game_is_on = False
+        # for event in pygame.event.get():
+            # get keyboard keys
+            if event.type == pygame.KEYDOWN:
+                # move right
+                if event.key == pygame.K_RIGHT:
+                    new_position = (self.xy_position[0]+1,\
+                     self.xy_position[1]+0)
+                # move down
+                if event.key == pygame.K_DOWN:
+                    new_position = (self.xy_position[0]+0,\
+                     self.xy_position[1]+1)                    
+                # move left        
+                if event.key == pygame.K_LEFT:
+                    new_position = (self.xy_position[0]-1,\
+                     self.xy_position[1]+ 0)  
+                # move up 
+                if event.key == pygame.K_UP:
+                    new_position = (self.xy_position[0]+0,\
+                     self.xy_position[1]-1)
+
+        new_position = [elt.xy_position for elt in grid.cells if elt.xy_position ==\
+         new_position and elt.cell_type != 0 ]
+        if new_position:
+            self.xy_position = new_position[0]
+
+    def events(self,grid,objects,game_is_on):
+        for i, elt in enumerate (objects.items):
+            if elt.xy_position == self.xy_position:
+                object_name = elt.object_name
+                self.collected_objects.append(object_name)
+                del objects.items[i]
+
+        game_win = False
+        game_over = False
+        for elt in grid.cells:
+            if self.xy_position == elt.xy_position and elt.cell_type == 3\
+             and len(self.collected_objects) == 3:
+                game_win = True
+                game_is_on = False
+            if self.xy_position == elt.xy_position and elt.cell_type == 3\
+             and len(self.collected_objects) < 3:
+                game_over =True
+                game_is_on = False
+        
+        return game_is_on, game_win, game_over

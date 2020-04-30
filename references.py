@@ -21,3 +21,4 @@ image_plastic_tube = 'data/pipe32.png'
 image_needle = 'data/needle32.png'
 
 image_guard = 'data/gardien32.png'
+image_macgyver = 'data/macgyver32.png'

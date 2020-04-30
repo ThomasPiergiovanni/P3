@@ -7,6 +7,7 @@ import math
 
 import analysis.input_data as a_id # import source data
 import classes as classes
+import functions as functions
 lg.basicConfig(level=lg.INFO)
 
 import pygame
@@ -18,91 +19,6 @@ pygame.display.set_caption("Mac Gyver")
 icon = pygame.image.load ('data/ressource/MacGyver.png')
 pygame.display.set_icon(icon)
 
-
-# Class of the Guard who restrict escape from the labyrinthe grid (i.e CELLS)
-class Guard:    
-    def __init__(self):
-        self.position = (0,0) 
-        self.image = pygame.image.load('data/gardien32.png').convert_alpha()
-        
-    # method to set Guard position on the appropriate cell
-    def initial_position(self,grid):
-        xy_position = [elt.xy_position  for elt in grid.cells if\
-         elt.cell_type == 3]
-        self.xy_position = xy_position[0]
-
-
-# Class of MacGyver. He will move on the lab, pick up objects and find the exit           
-class MacGyver:   
-    def __init__(self):
-        self.xy_position = (0,0)
-        self.image = pygame.image.load ('data/macgyver32.png').convert_alpha()
-        self.collected_objects = []
-
-    # method to set MacGyver position on the appropriate cell
-    def initial_position(self,grid):
-        xy_position = [elt.xy_position  for elt in grid.cells if\
-         elt.cell_type == 2]
-        self.xy_position = xy_position[0]
-        return self
-
-
-def keyboard(game_is_on,player):
-
-    new_position = player.xy_position
-    # enable pygame quit button
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT: 
-            game_is_on = False
-    # get keyboard keys
-        if event.type == pygame.KEYDOWN:
-            # move right
-            if event.key == pygame.K_RIGHT:
-                new_position = (player.xy_position[0]+1,\
-                 player.xy_position[1]+0)
-            # move down
-            if event.key == pygame.K_DOWN:
-                new_position = (player.xy_position[0]+0,\
-                 player.xy_position[1]+1)                    
-            # move left        
-            if event.key == pygame.K_LEFT:
-                new_position = (player.xy_position[0]-1,\
-                 player.xy_position[1]+ 0)  
-            # move up 
-            if event.key == pygame.K_UP:
-                new_position = (player.xy_position[0]+0,\
-                 player.xy_position[1]-1)
-    return new_position, game_is_on
-            
-# Check if MacGyver new position is OK (not a wall), if he reached the
-# end with all collected objects or not
-def check_player_position(game_is_on,new_position,player,grid):
-    game_status= "on"
-    xy_position = [elt.xy_position for elt in grid.cells if elt.xy_position ==
-     new_position and elt.cell_type != 0 ]
-    if xy_position:
-        player.xy_position = xy_position[0]
-        for elt in grid.cells:
-            if player.xy_position == elt.xy_position and elt.cell_type == 3\
-             and len(player.collected_objects) == 3:
-                game_status = "win"
-                game_is_on = False
-            if player.xy_position == elt.xy_position and elt.cell_type == 3\
-             and len(player.collected_objects) < 3:
-                game_status= "lost"
-                game_is_on = False
-
-    return game_is_on, player,game_status
-
-# Check if MacGyver new position is where an object is. If yes he put it in
-# his bag. 
-def check_objects(player,new_position, objects):
-    for i, elt in enumerate (objects.items):
-        if elt.xy_position == new_position:
-            object_name = elt.object_name
-            player.collected_objects.append(object_name)
-            del objects.items[i]
-    return player
 
 # Show the labyrinthe in command line console. DO NOT WORK ANYMORE.
 def show_in_command_line_console (player,cells,objects):
@@ -160,8 +76,9 @@ def show_in_command_line_console (player,cells,objects):
     print(labyrinthe_string)
     del _cells
 
-#Display in Pygames
-def show_in_pygame (player,grid,objects,guard,game_status):
+
+
+def show_in_pygame (mac_gyver,grid,objects,guard, game_win, game_over):
 
     screen.fill((0,0,0))
     
@@ -172,92 +89,30 @@ def show_in_pygame (player,grid,objects,guard,game_status):
     classes.Objects.show_objects(objects,screen)    
 
     #PG Displays the guard
-    classes.Guard.show_guard(guard,screen) 
+    classes.Guard.show_guard(guard,screen)
+
     #PG Displays MacGyver
-    x = player.xy_position[0] *32
-    y = player.xy_position[1] *32
-    screen.blit(player.image, (x,y))
+    classes.MacGyver.show_mac_gyver(mac_gyver,screen)
 
+    if game_win:
+        functions.show_game_winner (mac_gyver,screen)
 
-    #PG Displays backpack status when game is on
-    if game_status != "win" and game_status != "lost":
-        font = pygame.font.Font('freesansbold.ttf', 12)
-        x = 0
-        y = 490
-        backpack = font.render("Collected objects: "+\
-         str(len(player.collected_objects))
-        + "/3",True, (255,255,0))
-        screen.blit(backpack, (x,y))
+    if game_over:
+        functions.show_game_over (mac_gyver,screen)
 
-
-    if game_status != "win" and game_status != "lost" and\
-     len(player.collected_objects) == 3 :
-        font = pygame.font.Font('freesansbold.ttf', 12)
-        x = 0
-        y = 490
-        backpack = font.render("Collected objects: "+\
-         str(len(player.collected_objects)) + "/3",True, (0,255,0))
-        screen.blit(backpack, (x,y))
-
-    #PG Displays GAME OVER message
-    if game_status == "lost":
-        font = pygame.font.Font('freesansbold.ttf', 64)
-        x = 160
-        y = 170
-        game = font.render("GAME",True, (255,0,0))
-        screen.blit(game, (x,y))
-        x = 168
-        y = 252
-        over = font.render("OVER",True, (255,0,0))
-        screen.blit(over, (x,y))
-        font = pygame.font.Font('freesansbold.ttf', 12)
-        x = 0
-        y = 490
-        backpack = font.render("You haven't collected all objects: "+\
-         str(len(player.collected_objects)) + "/3",True, (255,0,0))
-        screen.blit(backpack, (x,y))
-
-    #PG Displays YOU WIN message
-    if game_status == "win":
-        font = pygame.font.Font('freesansbold.ttf', 64)
-        x = 185
-        y = 170
-        you = font.render("YOU",True, (0,255,0))
-        screen.blit(you, (x,y))
-        x = 175
-        y = 252
-        over = font.render("WON",True, (0,255,0))
-        screen.blit(over, (x,y))
-        font = pygame.font.Font('freesansbold.ttf', 12)
-        x = 0
-        y = 490
-        backpack = font.render("Collected objects: "+\
-         str(len(player.collected_objects)) + "/3",True, (0,255,0))
-        screen.blit(backpack, (x,y)) 
-    
+    if game_win == False and game_over == False:
+        functions.show_game_status(mac_gyver,screen)
     #PG to display the changes of this 'screen' ie screen vairable
     pygame.display.update()
-        
-def play(player,grid,objects,guard):
 
-    game_is_on = True
-    pygame.key.set_repeat(400, 30)
+def menu()
+
+    game_is_on
     while game_is_on:
-        pygame.time.Clock().tick(30)
-        new_position, game_is_on = keyboard(game_is_on, player)
-        if game_is_on:
-            game_is_on,player,game_status =\
-             check_player_position(game_is_on, new_position,player,grid)
-            player = check_objects(player,new_position,objects)
-            show_in_pygame(player,grid,objects,guard,game_status)
-
-if __name__ == "__main__":
-
-    # Step 1: get source into this module
-    # content_ready = a_id.main('labyrinthe.txt')
+        
+def play():
     grid = classes.Grid()
-
-    # Step 2: Generate cell instances
+    grid = classes.Grid()
     classes.Cell.initialize_cells(grid)
 
     # Step3 : Generate objects instances
@@ -265,14 +120,27 @@ if __name__ == "__main__":
     classes.Item.initialize_items(objects,grid)
 
     # Step4 : Generate guard instances
-    guard = Guard()
+    guard = classes.Guard()
     classes.Guard.initial_position(guard,grid)
 
     # Step5 : Generate macgyver instances
-    player = MacGyver()
-    player_set = MacGyver.initial_position(player,grid)
+    mac_gyver = classes.MacGyver()
+    classes.MacGyver.initial_position(mac_gyver,grid)
 
-    #Step6 : Control macgyver moves, create the wanted actions and view.
-    play(player_set, grid, objects, guard)
+    game_is_on = True
+    pygame.key.set_repeat(400, 30)
+    while game_is_on:
+        pygame.time.Clock().tick(30)
+        # enable pygame quit button
+        classes.MacGyver.moves(mac_gyver,grid)
+        game_is_on, game_win, game_over = classes.MacGyver.events\
+        (mac_gyver,grid,objects,game_is_on)
+        show_in_pygame(mac_gyver,grid,objects,guard, game_win, game_over)
+
+def main ():
+    menu()
+    play()
+
+main()
 
 os.system("pause")
