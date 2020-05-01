@@ -6,9 +6,9 @@ import pygame
 # Displays  "Play or Quit" on "Menu page"
 def show_menu(screen):
     font = pygame.font.Font('freesansbold.ttf', 20)
-    x = 150
-    y = 150
-    welcome = font.render("Do you want too play (press y/n)?: "\
+    x = 75
+    y = 250
+    welcome = font.render("Do you want to play (press y/n)?: "\
      ,True, (255,255,255))
     screen.blit(welcome, (x,y))
 
