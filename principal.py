@@ -15,13 +15,13 @@ pygame.display.set_caption("Mac Gyver")
 icon = pygame.image.load (ref.image_macgyver)
 pygame.display.set_icon(icon)
 
-# groups all dispalys functions used for "menu",displays
+# groups all displays functions used for "menu"
 def show_in_menu():
     screen.fill((0,0,0))
     functions.show_menu(screen)
     pygame.display.update()
 
-# groups all dispalys functions used for <<play>> displays
+# groups all displays functions used for "play"
 def show_in_pygame (mac_gyver,grid,objects,guard, game_win, game_over):
 
     screen.fill((0,0,0))
