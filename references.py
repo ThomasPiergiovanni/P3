@@ -8,7 +8,6 @@ data_file = os.path.join("data", "labyrinthe.txt")
 number_of_cell_per_side = 15
 
 # objects list
-
 objects = ["Needle","Plastic tube","Ether"]
 
 #game images

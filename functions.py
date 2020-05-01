@@ -2,6 +2,17 @@
 import os
 import pygame
 
+
+# Displays  "Play or Quit" on "Menu page"
+def show_menu(screen):
+    font = pygame.font.Font('freesansbold.ttf', 20)
+    x = 150
+    y = 150
+    welcome = font.render("Do you want too play (press y/n)?: "\
+     ,True, (255,255,255))
+    screen.blit(welcome, (x,y))
+
+# Displays game over on "play" page
 def show_game_over(mac_gyver,screen):
     font = pygame.font.Font('freesansbold.ttf', 64)
     x = 160
@@ -19,6 +30,7 @@ def show_game_over(mac_gyver,screen):
      str(len(mac_gyver.collected_objects)) + "/3",True, (255,0,0))
     screen.blit(backpack, (x,y))
 
+# Displays winner on "play" page
 def show_game_winner (mac_gyver,screen):
     font = pygame.font.Font('freesansbold.ttf', 64)
     x = 185
@@ -36,6 +48,7 @@ def show_game_winner (mac_gyver,screen):
      str(len(mac_gyver.collected_objects)) + "/3",True, (0,255,0))
     screen.blit(backpack, (x,y))
 
+# Displays amount of collected objects on "play" page
 def show_game_status(mac_gyver,screen):
 
     font = pygame.font.Font('freesansbold.ttf', 12)

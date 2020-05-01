@@ -6,12 +6,14 @@ import pygame
 import references as ref
 import functions as functions
 
+# Grid class
 class Grid:
     def __init__(self):
         self.source_data = ref.data_file
         self.wide = ref.number_of_cell_per_side
         self.cells =[]
 
+    # method do display the grid
     def show_grid (self,screen):
         for cell in self.cells:
             x_display = cell.xy_position[0] *32
@@ -19,6 +21,7 @@ class Grid:
             screen.blit(cell.cell_image,(x_display,y_display))
 
 
+# Cell class
 class Cell(Grid):
     def __init__(self,xy_position,cell_type,cell_image):
         super().__init__()
@@ -27,12 +30,13 @@ class Cell(Grid):
         self.cell_image = cell_image
 
     # method to 1) read source data, 2) to filter and prep them
-    # and 3) ot generate cell instances that will be stored into mother
-    # class attribute self.cells   
+    # and 3) to generate cell instances that will be stored into mother
+    # class  self.cells attribute   
     def initialize_cells(self):
         with open(self.source_data,"r") as source_file:
             content = source_file.read()
             element_list =[]
+
             for elt in content:
                 elt = str(elt)
                 if elt == "0" or elt == "1" or elt == "2" or elt == "3":
@@ -50,13 +54,15 @@ class Cell(Grid):
                     image = pygame.image.load(ref.image_path).convert_alpha()
                 cell = Cell((x,y),elt,image)
                 self.cells.append(cell)
-                
+ 
 
+# Objects class
 class Objects:
     def __init__(self):
         self.source_data = ref.objects
         self.items =[]
 
+	# method do display the objects
     def show_objects (self,screen):
         for item in self.items:
             x_display = item.xy_position[0] *32
@@ -64,6 +70,7 @@ class Objects:
             screen.blit(item.image,(x_display,y_display))
 
 
+# Item class
 class Item(Objects):    
     def __init__(self,xy_position,name,image):
         super().__init__()
@@ -71,8 +78,10 @@ class Item(Objects):
         self.object_name = name 
         self.image = image
 
-    # class method to generate objects instances. Instances will be randomly 
-    # positionned on a appropriate/valid cell
+    # Method to 1) randomly position items on the 
+    # grid ensuring that two objects are not positionned on the same cell
+    # and  2) to generate items instances that will be stored into mother
+    # class  self.items attribute
     def initialize_items(self,grid):
         rand_cell_list = []
         for i,name in enumerate(self.source_data):
@@ -82,6 +91,7 @@ class Item(Objects):
                 print (rand_cell.xy_position,elt.xy_position )
                 while rand_cell.xy_position == elt.xy_position:
                     rand_cell = random.choice(valid_cells)
+
             xy_position = rand_cell.xy_position
             if name == "Ether":
                 image = pygame.image.load(ref.image_ether).convert_alpha()
@@ -92,14 +102,8 @@ class Item(Objects):
             item = Item(xy_position,name, image)
             self.items.append(item)
 
-    def show_objects (self,screen):
-        for item in self.items:
-            x_display = item.xy_position[0] *32
-            y_display = item.xy_position[1] *32
-            screen.blit(item.image,(x_display,y_display))  
 
-
-# Class of the Guard who restrict escape from the labyrinthe grid (i.e CELLS)
+# Guard class
 class Guard:    
     def __init__(self):
         self.xy_position = (0,0) 
@@ -110,14 +114,15 @@ class Guard:
         xy_position = [elt.xy_position  for elt in grid.cells if\
          elt.cell_type == 3]
         self.xy_position = xy_position[0]  
-         
+    
+    # method do display the guard   
     def show_guard(self,screen):
         x_display = self.xy_position[0] *32
         y_display = self.xy_position[1] *32
         screen.blit(self.image,(x_display,y_display))
 
 
-# Class of MacGyver. He will move on the lab, pick up objects and find the exit           
+# MacGyver class           
 class MacGyver:   
     def __init__(self):
         self.xy_position = (0,0)
@@ -130,58 +135,11 @@ class MacGyver:
          elt.cell_type == 2]
         self.xy_position = xy_position[0]
 
+    # method do display mac gyver
     def show_mac_gyver(self,screen):
         x_display = self.xy_position[0] *32
         y_display = self.xy_position[1] *32
         screen.blit(self.image,(x_display,y_display))
 
-    def moves(self,grid):
-        new_position = 0
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT: 
-                game_is_on = False
-        # for event in pygame.event.get():
-            # get keyboard keys
-            if event.type == pygame.KEYDOWN:
-                # move right
-                if event.key == pygame.K_RIGHT:
-                    new_position = (self.xy_position[0]+1,\
-                     self.xy_position[1]+0)
-                # move down
-                if event.key == pygame.K_DOWN:
-                    new_position = (self.xy_position[0]+0,\
-                     self.xy_position[1]+1)                    
-                # move left        
-                if event.key == pygame.K_LEFT:
-                    new_position = (self.xy_position[0]-1,\
-                     self.xy_position[1]+ 0)  
-                # move up 
-                if event.key == pygame.K_UP:
-                    new_position = (self.xy_position[0]+0,\
-                     self.xy_position[1]-1)
 
-        new_position = [elt.xy_position for elt in grid.cells if elt.xy_position ==\
-         new_position and elt.cell_type != 0 ]
-        if new_position:
-            self.xy_position = new_position[0]
-
-    def events(self,grid,objects,game_is_on):
-        for i, elt in enumerate (objects.items):
-            if elt.xy_position == self.xy_position:
-                object_name = elt.object_name
-                self.collected_objects.append(object_name)
-                del objects.items[i]
-
-        game_win = False
-        game_over = False
-        for elt in grid.cells:
-            if self.xy_position == elt.xy_position and elt.cell_type == 3\
-             and len(self.collected_objects) == 3:
-                game_win = True
-                game_is_on = False
-            if self.xy_position == elt.xy_position and elt.cell_type == 3\
-             and len(self.collected_objects) < 3:
-                game_over =True
-                game_is_on = False
-        
-        return game_is_on, game_win, game_over
+ 
