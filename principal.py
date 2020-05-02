@@ -16,13 +16,26 @@ icon = pygame.image.load (constants.image_macgyver)
 pygame.display.set_icon(icon)
 
 # groups all displays functions used for "menu"
-def show_in_menu():
+def show_in_menu(game_status):
     screen.fill((0,0,0))
-    functions.show_menu(screen)
+
+    #Calls "displays winner message"
+    if game_status == 1:
+        functions.show_game_winner(screen)
+
+    #Calls "display looser message"
+    if game_status == 2:
+        functions.show_game_over (screen)
+
+    if game_status == 0:
+        functions.show_menu_welcome (screen)
+
+    functions.show_menu_message(screen)
+
     pygame.display.update()
 
 # groups all displays functions used for "play"
-def show_in_pygame (mac_gyver,grid,objects,guard, game_win, game_over):
+def show_in_pygame (mac_gyver,grid,objects,guard):
 
     screen.fill((0,0,0))
     
@@ -38,23 +51,14 @@ def show_in_pygame (mac_gyver,grid,objects,guard, game_win, game_over):
     #Calls "displays MacGyver"
     classes.MacGyver.show_mac_gyver(mac_gyver,screen)
 
-    #Calls "displays winner message"
-    if game_win:
-        functions.show_game_winner (mac_gyver,screen)
-
-    #Calls "display looser message"
-    if game_over:
-        functions.show_game_over (mac_gyver,screen)
-
     #Calls "backpack message"
-    if game_win == False and game_over == False:
-        functions.show_game_status(mac_gyver,screen)
+
+    functions.show_game_status(mac_gyver,screen)
 
     pygame.display.update()
  
 # "Menu" page loop
-def menu(loop_main,loop_menu,loop_play):
-      
+def menu(loop_main,loop_menu,loop_play,game_status):
     while loop_menu:
         pygame.time.Clock().tick(30)
         for event in pygame.event.get():
@@ -74,11 +78,11 @@ def menu(loop_main,loop_menu,loop_play):
                     loop_play = False
 
         #calls "Menu" display function
-        show_in_menu()
+        show_in_menu(game_status)
     return loop_main,loop_menu,loop_play      
  
  # "Game" program       
-def play(loop_main,loop_menu,loop_play):
+def play(loop_main,loop_menu,loop_play, game_status):
 
     # Create cells and grid instances
     grid = classes.Grid()
@@ -143,35 +147,34 @@ def play(loop_main,loop_menu,loop_play):
 
         # When arriving at the guard, checks whether MacCheck has collected 
         # all objects or not        
-        game_win = False
-        game_over = False
         for elt in grid.cells:
             if mac_gyver.xy_position == elt.xy_position and elt.cell_type == 3\
              and len(mac_gyver.collected_objects) == 3:
-                game_win = True
+                game_status = 1
                 loop_main = True
                 loop_menu = True
                 loop_play = False
             if mac_gyver.xy_position == elt.xy_position and elt.cell_type == 3\
              and len(mac_gyver.collected_objects) < 3:
-                game_over =True
+                game_status = 2
                 loop_main = True
                 loop_menu = True
                 loop_play = False
         
         #Calls "Play" displays functions
-        show_in_pygame(mac_gyver,grid,objects,guard, game_win, game_over)
+        show_in_pygame(mac_gyver,grid,objects,guard)
 
-    return loop_main,loop_menu,loop_play
+    return loop_main,loop_menu,loop_play,game_status
 
 # Main loop
 def main():
     loop_main = True
     loop_menu = True
     loop_play = True
+    game_status = 0
     while loop_main:
-        loop_main,loop_menu,loop_play = menu(loop_main,loop_menu,loop_play)
-        loop_main,loop_menu,loop_play = play(loop_main,loop_menu,loop_play)
+        loop_main,loop_menu,loop_play = menu(loop_main,loop_menu,loop_play,game_status)
+        loop_main,loop_menu,loop_play,game_status = play(loop_main,loop_menu,loop_play,game_status)
 
 main()
 
