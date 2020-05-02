@@ -12,7 +12,7 @@ import functions as functions
 pygame.init()
 screen = pygame.display.set_mode((480,580))
 pygame.display.set_caption("Mac Gyver")
-icon = pygame.image.load (constants.image_macgyver)
+icon = pygame.image.load (constants.IMAGE_MACGYVER)
 pygame.display.set_icon(icon)
 
 # groups all displays functions used for "menu"

@@ -2,22 +2,22 @@
 import os
 
 #source data, the labyrinthe
-data_file = os.path.join("data", "labyrinthe.txt")
+DATA_FILE = os.path.join("data", "labyrinthe.txt")
 
 #labyrinthe dimensions
-number_of_cell_per_side = 15
+NUMBER_OF_CELL_PER_SIDE = 15
 
 # objects list
-objects = ["Needle","Plastic tube","Ether"]
+OBJECTS = ["Needle","Plastic tube","Ether"]
 
 #game images
-image_wall = 'data/wall32.png'
-image_path = 'data/path32.png'
-image_start = 'data/start32.png'
+IMAGE_WALL = 'data/wall32.png'
+IMAGE_PATH = 'data/path32.png'
+IMAGE_START = 'data/start32.png'
 
-image_ether = 'data/ether32.png'
-image_plastic_tube = 'data/pipe32.png'
-image_needle = 'data/needle32.png'
+IMAGE_ETHER = 'data/ether32.png'
+IMAGE_PLASTIC_TUBE = 'data/pipe32.png'
+IMAGE_NEEDLE = 'data/needle32.png'
 
-image_guard = 'data/gardien32.png'
-image_macgyver = 'data/macgyver32.png'
+IMAGE_GUARD = 'data/gardien32.png'
+IMAGE_MACGYVER = 'data/macgyver32.png'
