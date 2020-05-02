@@ -53,7 +53,7 @@ def show_in_pygame (macgyver_instance,grid_instance,objects_instance,guard_insta
     guard.Guard.show_guard(guard_instance,screen)
 
     #Calls "displays MacGyver"
-    macgyver.MacGyver.show_mac_gyver(macgyver_instance,screen)
+    macgyver.MacGyver.show(macgyver_instance,screen)
 
     #Calls "backpack message"
 
