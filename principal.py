@@ -68,9 +68,7 @@ def menu(loops_instance,game_status):
         pygame.time.Clock().tick(30)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                loops_instance.main = False
-                loops_instance.menu = False
-                loops_instance.play = False
+                loop.Loop.quit_game(loops_instance)
             if event.type == pygame.KEYDOWN:
                 # move right
                 if event.key == pygame.K_y:

@@ -2,6 +2,7 @@
 import pygame
 
 import constants as constants
+import loop as loop
 
 # MacGyver class           
 class MacGyver:   
@@ -25,10 +26,8 @@ class MacGyver:
     def moves(self,loops_instance, grid_instance):
         new_position = 0
         for event in pygame.event.get():
-            if event.type == pygame.QUIT: 
-                loops_instance.main = False
-                loops_instance.menu = False
-                loops_instance.play = False
+            if event.type == pygame.QUIT:
+                loop.Loop.quit_game(loops_instance)
 
             # Checks MacGyver future position based on key stroke
             if event.type == pygame.KEYDOWN:
