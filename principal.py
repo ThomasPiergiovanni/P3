@@ -11,6 +11,7 @@ import grid as grid
 import cell as cell
 import objects as objects
 import item as item
+import guard as guard
 
 import functions as functions
 
@@ -41,7 +42,7 @@ def show_in_menu(game_status):
     pygame.display.update()
 
 # groups all displays functions used for "play"
-def show_in_pygame (mac_gyver,grid_instance,objects_instance,guard):
+def show_in_pygame (mac_gyver,grid_instance,objects_instance,guard_instance):
 
     screen.fill((0,0,0))
     
@@ -52,7 +53,7 @@ def show_in_pygame (mac_gyver,grid_instance,objects_instance,guard):
     objects.Objects.show_objects(objects_instance,screen)    
 
     #Calls "display the guard"
-    classes.Guard.show_guard(guard,screen)
+    guard.Guard.show_guard(guard_instance,screen)
 
     #Calls "displays MacGyver"
     classes.MacGyver.show_mac_gyver(mac_gyver,screen)
@@ -99,8 +100,8 @@ def play(loop_main,loop_menu,loop_play, game_status):
     item.Item.initialize_items(objects_instance,grid_instance)
 
     # Create guard instance
-    guard = classes.Guard()
-    classes.Guard.initial_position(guard,grid_instance)
+    guard_instance = guard.Guard()
+    guard.Guard.initial_position(guard_instance,grid_instance)
 
     # Create MacGyver instance
     mac_gyver = classes.MacGyver()
@@ -167,7 +168,7 @@ def play(loop_main,loop_menu,loop_play, game_status):
                 loop_play = False
         
         #Calls "Play" displays functions
-        show_in_pygame(mac_gyver,grid_instance,objects_instance,guard)
+        show_in_pygame(mac_gyver,grid_instance,objects_instance,guard_instance)
 
     return loop_main,loop_menu,loop_play,game_status
 
