@@ -5,7 +5,10 @@ import math
 import pygame
 
 import constants as constants
+
 import classes as classes
+import grid as grid
+
 import functions as functions
 
 
@@ -35,12 +38,12 @@ def show_in_menu(game_status):
     pygame.display.update()
 
 # groups all displays functions used for "play"
-def show_in_pygame (mac_gyver,grid,objects,guard):
+def show_in_pygame (mac_gyver,grid_instance,objects,guard):
 
     screen.fill((0,0,0))
     
     #Calls "display cells"
-    classes.Cell.show_grid(grid,screen)
+    grid.Grid.show_grid(grid_instance,screen)
 
     #Calls "display objects"
     classes.Objects.show_objects(objects,screen)    
@@ -85,21 +88,20 @@ def menu(loop_main,loop_menu,loop_play,game_status):
 def play(loop_main,loop_menu,loop_play, game_status):
 
     # Create cells and grid instances
-    grid = classes.Grid()
-    grid = classes.Grid()
-    classes.Cell.initialize_cells(grid)
+    grid_instance = grid.Grid()
+    classes.Cell.initialize_cells(grid_instance)
 
     # Create objects instances
     objects = classes.Objects()
-    classes.Item.initialize_items(objects,grid)
+    classes.Item.initialize_items(objects,grid_instance)
 
     # Create guard instance
     guard = classes.Guard()
-    classes.Guard.initial_position(guard,grid)
+    classes.Guard.initial_position(guard,grid_instance)
 
     # Create MacGyver instance
     mac_gyver = classes.MacGyver()
-    classes.MacGyver.initial_position(mac_gyver,grid)
+    classes.MacGyver.initial_position(mac_gyver,grid_instance)
 
     # "Game" page loop 
     pygame.key.set_repeat(400, 30)
@@ -132,7 +134,7 @@ def play(loop_main,loop_menu,loop_play, game_status):
                      mac_gyver.xy_position[1]-1)
 
         # Check if MacGyver future position is valid. if yes, MacGyver moves there.
-        new_position = [elt.xy_position for elt in grid.cells if elt.xy_position ==\
+        new_position = [elt.xy_position for elt in grid_instance.cells if elt.xy_position ==\
          new_position and elt.cell_type != 0 ]
         if new_position:
             mac_gyver.xy_position = new_position[0]
@@ -147,7 +149,7 @@ def play(loop_main,loop_menu,loop_play, game_status):
 
         # When arriving at the guard, checks whether MacCheck has collected 
         # all objects or not        
-        for elt in grid.cells:
+        for elt in grid_instance.cells:
             if mac_gyver.xy_position == elt.xy_position and elt.cell_type == 3\
              and len(mac_gyver.collected_objects) == 3:
                 game_status = 1
@@ -162,7 +164,7 @@ def play(loop_main,loop_menu,loop_play, game_status):
                 loop_play = False
         
         #Calls "Play" displays functions
-        show_in_pygame(mac_gyver,grid,objects,guard)
+        show_in_pygame(mac_gyver,grid_instance,objects,guard)
 
     return loop_main,loop_menu,loop_play,game_status
 
