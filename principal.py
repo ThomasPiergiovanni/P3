@@ -107,8 +107,10 @@ def play(loops_instance, game_status):
     pygame.key.set_repeat(400, 30)
     while loops_instance.play:
         pygame.time.Clock().tick(30)
-        loops_instance = macgyver.MacGyver.moves(macgyver_instance,\
-         loops_instance,grid_instance)
+        new_position = macgyver.MacGyver.moves(macgyver_instance,\
+         loops_instance)
+        macgyver.MacGyver.effective_move(macgyver_instance,\
+         new_position,grid_instance)
 
         # Check if any object are present at that new position. if yes, MacGyver
         # put it in his back pack and that object is removed from the list.

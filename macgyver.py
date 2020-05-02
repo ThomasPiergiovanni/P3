@@ -23,7 +23,7 @@ class MacGyver:
         y_display = self.xy_position[1] * constants.CELL_SIZE
         screen.blit(self.image,(x_display,y_display))
 
-    def moves(self,loops_instance, grid_instance):
+    def moves(self,loops_instance):
         new_position = 0
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -41,11 +41,14 @@ class MacGyver:
                     coo_x -= 1
                 if event.key == pygame.K_UP:
                     coo_y -= 1
-                new_position = (coo_x,coo_y) 
+                new_position = (coo_x,coo_y)
 
+        return new_position                 
+
+    def effective_move(self,new_position, grid_instance):
         new_position = [elt.xy_position for elt in grid_instance.cells\
          if elt.xy_position == new_position and elt.cell_type != 0 ]
         if new_position:
             self.xy_position = new_position[0]
 
-        return loops_instance
+
