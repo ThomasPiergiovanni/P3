@@ -107,21 +107,12 @@ def play(loops_instance, game_status):
     pygame.key.set_repeat(400, 30)
     while loops_instance.play:
         pygame.time.Clock().tick(30)
-        new_position = macgyver.MacGyver.moves(macgyver_instance,\
+        new_position = macgyver.MacGyver.move(macgyver_instance,\
          loops_instance)
-        macgyver.MacGyver.effective_move(macgyver_instance,\
+        macgyver.MacGyver.true_move(macgyver_instance,\
          new_position,grid_instance)
-
-        # Check if any object are present at that new position. if yes, MacGyver
-        # put it in his back pack and that object is removed from the list.
-        for i, elt in enumerate (objects_instance.items):
-            if elt.xy_position == macgyver_instance.xy_position:
-                object_name = elt.object_name
-                macgyver_instance.collected_objects.append(object_name)
-                del objects_instance.items[i]
-
-        # When arriving at the guard, checks whether MacCheck has collected 
-        # all objects or not        
+        macgyver.MacGyver.collect(macgyver_instance, objects_instance)
+      
         for elt in grid_instance.cells:
             if macgyver_instance.xy_position == elt.xy_position and elt.cell_type == 3\
              and len(macgyver_instance.collected_objects) == 3:
