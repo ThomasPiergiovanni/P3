@@ -10,6 +10,7 @@ import classes as classes
 import grid as grid
 import cell as cell
 import objects as objects
+import item as item
 
 import functions as functions
 
@@ -95,7 +96,7 @@ def play(loop_main,loop_menu,loop_play, game_status):
 
     # Create objects instances
     objects_instance = objects.Objects()
-    classes.Item.initialize_items(objects_instance,grid_instance)
+    item.Item.initialize_items(objects_instance,grid_instance)
 
     # Create guard instance
     guard = classes.Guard()
