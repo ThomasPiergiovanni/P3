@@ -108,37 +108,8 @@ def play(loop_main,loop_menu,loop_play, game_status):
     pygame.key.set_repeat(400, 30)
     while loop_play:
         pygame.time.Clock().tick(30)
-        new_position = 0
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT: 
-                loop_main = False
-                loop_menu = False
-                loop_play = False
-
-            # Checks MacGyver future position based on key stroke
-            if event.type == pygame.KEYDOWN:
-                  # move right
-                if event.key == pygame.K_RIGHT:
-                    new_position = (macgyver_instance.xy_position[0]+1,\
-                     macgyver_instance.xy_position[1]+0)
-                  # move down
-                if event.key == pygame.K_DOWN:
-                    new_position = (macgyver_instance.xy_position[0]+0,\
-                     macgyver_instance.xy_position[1]+1)                    
-                  # move left        
-                if event.key == pygame.K_LEFT:
-                    new_position = (macgyver_instance.xy_position[0]-1,\
-                     macgyver_instance.xy_position[1]+ 0)  
-                  # move up 
-                if event.key == pygame.K_UP:
-                    new_position = (macgyver_instance.xy_position[0]+0,\
-                     macgyver_instance.xy_position[1]-1)
-
-        # Check if MacGyver future position is valid. if yes, MacGyver moves there.
-        new_position = [elt.xy_position for elt in grid_instance.cells if elt.xy_position ==\
-         new_position and elt.cell_type != 0 ]
-        if new_position:
-            macgyver_instance.xy_position = new_position[0]
+        loop_main,loop_menu,loop_play = macgyver.MacGyver.moves(macgyver_instance,\
+         loop_main, loop_menu,loop_play,grid_instance)
 
         # Check if any object are present at that new position. if yes, MacGyver
         # put it in his back pack and that object is removed from the list.
