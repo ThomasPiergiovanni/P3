@@ -3,14 +3,14 @@ import os
 import random
 import pygame
 
-import references as ref
+import constants as constants
 import functions as functions
 
 # Grid class
 class Grid:
     def __init__(self):
-        self.source_data = ref.data_file
-        self.wide = ref.number_of_cell_per_side
+        self.source_data = constants.data_file
+        self.wide = constants.number_of_cell_per_side
         self.cells =[]
 
     # method do display the grid
@@ -47,11 +47,11 @@ class Cell(Grid):
                 x = i % self.wide
                 y = i // self.wide
                 if elt == 0: #"wall":
-                    image = pygame.image.load(ref.image_wall).convert_alpha()
+                    image = pygame.image.load(constants.image_wall).convert_alpha()
                 elif elt ==2: #"start":
-                    image = pygame.image.load(ref.image_start).convert_alpha()
+                    image = pygame.image.load(constants.image_start).convert_alpha()
                 else:
-                    image = pygame.image.load(ref.image_path).convert_alpha()
+                    image = pygame.image.load(constants.image_path).convert_alpha()
                 cell = Cell((x,y),elt,image)
                 self.cells.append(cell)
  
@@ -59,7 +59,7 @@ class Cell(Grid):
 # Objects class
 class Objects:
     def __init__(self):
-        self.source_data = ref.objects
+        self.source_data = constants.objects
         self.items =[]
 
 	# method do display the objects
@@ -94,11 +94,11 @@ class Item(Objects):
 
             xy_position = rand_cell.xy_position
             if name == "Ether":
-                image = pygame.image.load(ref.image_ether).convert_alpha()
+                image = pygame.image.load(constants.image_ether).convert_alpha()
             if name == "Plastic tube":
-                image = pygame.image.load(ref.image_plastic_tube).convert_alpha()
+                image = pygame.image.load(constants.image_plastic_tube).convert_alpha()
             if name == "Needle":
-                image = pygame.image.load(ref.image_needle).convert_alpha()
+                image = pygame.image.load(constants.image_needle).convert_alpha()
             item = Item(xy_position,name, image)
             self.items.append(item)
 
@@ -107,7 +107,7 @@ class Item(Objects):
 class Guard:    
     def __init__(self):
         self.xy_position = (0,0) 
-        self.image = pygame.image.load(ref.image_guard).convert_alpha()
+        self.image = pygame.image.load(constants.image_guard).convert_alpha()
         
     # method to set Guard position on the appropriate cell
     def initial_position(self,grid):

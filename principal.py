@@ -4,7 +4,7 @@ import random
 import math
 import pygame
 
-import references as ref
+import constants as constants
 import classes as classes
 import functions as functions
 
@@ -12,7 +12,7 @@ import functions as functions
 pygame.init()
 screen = pygame.display.set_mode((480,580))
 pygame.display.set_caption("Mac Gyver")
-icon = pygame.image.load (ref.image_macgyver)
+icon = pygame.image.load (constants.image_macgyver)
 pygame.display.set_icon(icon)
 
 # groups all displays functions used for "menu"
