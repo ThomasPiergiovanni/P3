@@ -16,8 +16,8 @@ class Grid:
     # method do display the grid
     def show_grid (self,screen):
         for cell in self.cells:
-            x_display = cell.xy_position[0] *32
-            y_display = cell.xy_position[1] *32
+            x_display = cell.xy_position[0] * constants.CELL_SIZE
+            y_display = cell.xy_position[1] * constants.CELL_SIZE
             screen.blit(cell.cell_image,(x_display,y_display))
 
 
@@ -65,8 +65,8 @@ class Objects:
 	# method do display the objects
     def show_objects (self,screen):
         for item in self.items:
-            x_display = item.xy_position[0] *32
-            y_display = item.xy_position[1] *32
+            x_display = item.xy_position[0] * constants.CELL_SIZE
+            y_display = item.xy_position[1] * constants.CELL_SIZE
             screen.blit(item.image,(x_display,y_display))
 
 
@@ -117,8 +117,8 @@ class Guard:
     
     # method do display the guard   
     def show_guard(self,screen):
-        x_display = self.xy_position[0] *32
-        y_display = self.xy_position[1] *32
+        x_display = self.xy_position[0] * constants.CELL_SIZE
+        y_display = self.xy_position[1] * constants.CELL_SIZE
         screen.blit(self.image,(x_display,y_display))
 
 
@@ -137,8 +137,8 @@ class MacGyver:
 
     # method do display mac gyver
     def show_mac_gyver(self,screen):
-        x_display = self.xy_position[0] *32
-        y_display = self.xy_position[1] *32
+        x_display = self.xy_position[0] * constants.CELL_SIZE
+        y_display = self.xy_position[1] * constants.CELL_SIZE
         screen.blit(self.image,(x_display,y_display))
 
 

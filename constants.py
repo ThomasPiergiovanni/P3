@@ -1,11 +1,11 @@
 #-*-coding:utf-8 -*
-import os
 
 #source data, the labyrinthe
-DATA_FILE = os.path.join("data", "labyrinthe.txt")
+DATA_FILE ="data/labyrinthe.txt"
 
 #labyrinthe dimensions
 NUMBER_OF_CELL_PER_SIDE = 15
+CELL_SIZE = 32
 
 # objects list
 OBJECTS = ["Needle","Plastic tube","Ether"]
