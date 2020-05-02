@@ -1,7 +1,4 @@
 #-*-coding:utf-8 -*  
-import os 
-import random
-import math
 import pygame
 
 import constants as constants
