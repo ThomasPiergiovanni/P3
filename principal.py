@@ -8,6 +8,7 @@ import constants as constants
 
 import classes as classes
 import grid as grid
+import cell as cell
 
 import functions as functions
 
@@ -89,7 +90,7 @@ def play(loop_main,loop_menu,loop_play, game_status):
 
     # Create cells and grid instances
     grid_instance = grid.Grid()
-    classes.Cell.initialize_cells(grid_instance)
+    cell.Cell.initialize_cells(grid_instance)
 
     # Create objects instances
     objects = classes.Objects()
