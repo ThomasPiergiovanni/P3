@@ -6,7 +6,7 @@ import pygame
 
 import constants as constants
 
-import classes as classes
+import macgyver as macgyver
 import grid as grid
 import cell as cell
 import objects as objects
@@ -42,7 +42,7 @@ def show_in_menu(game_status):
     pygame.display.update()
 
 # groups all displays functions used for "play"
-def show_in_pygame (mac_gyver,grid_instance,objects_instance,guard_instance):
+def show_in_pygame (macgyver_instance,grid_instance,objects_instance,guard_instance):
 
     screen.fill((0,0,0))
     
@@ -56,11 +56,11 @@ def show_in_pygame (mac_gyver,grid_instance,objects_instance,guard_instance):
     guard.Guard.show_guard(guard_instance,screen)
 
     #Calls "displays MacGyver"
-    classes.MacGyver.show_mac_gyver(mac_gyver,screen)
+    macgyver.MacGyver.show_mac_gyver(macgyver_instance,screen)
 
     #Calls "backpack message"
 
-    functions.show_game_status(mac_gyver,screen)
+    functions.show_game_status(macgyver_instance,screen)
 
     pygame.display.update()
  
@@ -104,8 +104,8 @@ def play(loop_main,loop_menu,loop_play, game_status):
     guard.Guard.initial_position(guard_instance,grid_instance)
 
     # Create MacGyver instance
-    mac_gyver = classes.MacGyver()
-    classes.MacGyver.initial_position(mac_gyver,grid_instance)
+    macgyver_instance = macgyver.MacGyver()
+    macgyver.MacGyver.initial_position(macgyver_instance,grid_instance)
 
     # "Game" page loop 
     pygame.key.set_repeat(400, 30)
@@ -122,53 +122,53 @@ def play(loop_main,loop_menu,loop_play, game_status):
             if event.type == pygame.KEYDOWN:
                   # move right
                 if event.key == pygame.K_RIGHT:
-                    new_position = (mac_gyver.xy_position[0]+1,\
-                     mac_gyver.xy_position[1]+0)
+                    new_position = (macgyver_instance.xy_position[0]+1,\
+                     macgyver_instance.xy_position[1]+0)
                   # move down
                 if event.key == pygame.K_DOWN:
-                    new_position = (mac_gyver.xy_position[0]+0,\
-                     mac_gyver.xy_position[1]+1)                    
+                    new_position = (macgyver_instance.xy_position[0]+0,\
+                     macgyver_instance.xy_position[1]+1)                    
                   # move left        
                 if event.key == pygame.K_LEFT:
-                    new_position = (mac_gyver.xy_position[0]-1,\
-                     mac_gyver.xy_position[1]+ 0)  
+                    new_position = (macgyver_instance.xy_position[0]-1,\
+                     macgyver_instance.xy_position[1]+ 0)  
                   # move up 
                 if event.key == pygame.K_UP:
-                    new_position = (mac_gyver.xy_position[0]+0,\
-                     mac_gyver.xy_position[1]-1)
+                    new_position = (macgyver_instance.xy_position[0]+0,\
+                     macgyver_instance.xy_position[1]-1)
 
         # Check if MacGyver future position is valid. if yes, MacGyver moves there.
         new_position = [elt.xy_position for elt in grid_instance.cells if elt.xy_position ==\
          new_position and elt.cell_type != 0 ]
         if new_position:
-            mac_gyver.xy_position = new_position[0]
+            macgyver_instance.xy_position = new_position[0]
 
         # Check if any object are present at that new position. if yes, MacGyver
         # put it in his back pack and that object is removed from the list.
         for i, elt in enumerate (objects_instance.items):
-            if elt.xy_position == mac_gyver.xy_position:
+            if elt.xy_position == macgyver_instance.xy_position:
                 object_name = elt.object_name
-                mac_gyver.collected_objects.append(object_name)
+                macgyver_instance.collected_objects.append(object_name)
                 del objects_instance.items[i]
 
         # When arriving at the guard, checks whether MacCheck has collected 
         # all objects or not        
         for elt in grid_instance.cells:
-            if mac_gyver.xy_position == elt.xy_position and elt.cell_type == 3\
-             and len(mac_gyver.collected_objects) == 3:
+            if macgyver_instance.xy_position == elt.xy_position and elt.cell_type == 3\
+             and len(macgyver_instance.collected_objects) == 3:
                 game_status = 1
                 loop_main = True
                 loop_menu = True
                 loop_play = False
-            if mac_gyver.xy_position == elt.xy_position and elt.cell_type == 3\
-             and len(mac_gyver.collected_objects) < 3:
+            if macgyver_instance.xy_position == elt.xy_position and elt.cell_type == 3\
+             and len(macgyver_instance.collected_objects) < 3:
                 game_status = 2
                 loop_main = True
                 loop_menu = True
                 loop_play = False
         
         #Calls "Play" displays functions
-        show_in_pygame(mac_gyver,grid_instance,objects_instance,guard_instance)
+        show_in_pygame(macgyver_instance,grid_instance,objects_instance,guard_instance)
 
     return loop_main,loop_menu,loop_play,game_status
 

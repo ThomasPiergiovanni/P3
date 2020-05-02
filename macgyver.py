@@ -1,12 +1,9 @@
 #-*-coding:utf-8 -*
-import os
-import random
 import pygame
 
 import constants as constants
 
-import functions as functions
-import objects as objects
+
 
 # MacGyver class           
 class MacGyver:   
