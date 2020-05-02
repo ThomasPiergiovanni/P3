@@ -22,13 +22,13 @@ class MacGyver:
         y_display = self.xy_position[1] * constants.CELL_SIZE
         screen.blit(self.image,(x_display,y_display))
 
-    def moves(self,loop_main,loop_menu,loop_play,grid_instance):
+    def moves(self,loops_instance, grid_instance):
         new_position = 0
         for event in pygame.event.get():
             if event.type == pygame.QUIT: 
-                loop_main = False
-                loop_menu = False
-                loop_play = False
+                loops_instance.main = False
+                loops_instance.menu = False
+                loops_instance.play = False
 
             # Checks MacGyver future position based on key stroke
             if event.type == pygame.KEYDOWN:
@@ -49,4 +49,4 @@ class MacGyver:
         if new_position:
             self.xy_position = new_position[0]
 
-        return loop_main, loop_menu,loop_play
+        return loops_instance

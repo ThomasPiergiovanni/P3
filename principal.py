@@ -9,6 +9,7 @@ import cell as cell
 import objects as objects
 import item as item
 import guard as guard
+import loop as loop
 
 import functions as functions
 
@@ -62,31 +63,31 @@ def show_in_pygame (macgyver_instance,grid_instance,objects_instance,guard_insta
     pygame.display.update()
  
 # "Menu" page loop
-def menu(loop_main,loop_menu,loop_play,game_status):
-    while loop_menu:
+def menu(loops_instance,game_status):
+    while loops_instance.menu:
         pygame.time.Clock().tick(30)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                loop_main = False
-                loop_menu = False
-                loop_play = False
+                loops_instance.main = False
+                loops_instance.menu = False
+                loops_instance.play = False
             if event.type == pygame.KEYDOWN:
                 # move right
                 if event.key == pygame.K_y:
-                    loop_main = True
-                    loop_menu = False
-                    loop_play = True
+                    loops_instance.main = True
+                    loops_instance.menu = False
+                    loops_instance.play = True
                 if event.key == pygame.K_n:
-                    loop_main = False
-                    loop_menu = False
-                    loop_play = False
+                    loops_instance.main = False
+                    loops_instance.menu = False
+                    loops_instance.play = False
 
         #calls "Menu" display function
         show_in_menu(game_status)
-    return loop_main,loop_menu,loop_play      
+    return loops_instance      
  
  # "Game" program       
-def play(loop_main,loop_menu,loop_play, game_status):
+def play(loops_instance, game_status):
 
     # Create cells and grid instances
     grid_instance = grid.Grid()
@@ -106,10 +107,10 @@ def play(loop_main,loop_menu,loop_play, game_status):
 
     # "Game" page loop 
     pygame.key.set_repeat(400, 30)
-    while loop_play:
+    while loops_instance.play:
         pygame.time.Clock().tick(30)
-        loop_main,loop_menu,loop_play = macgyver.MacGyver.moves(macgyver_instance,\
-         loop_main, loop_menu,loop_play,grid_instance)
+        loops_instance = macgyver.MacGyver.moves(macgyver_instance,\
+         loops_instance,grid_instance)
 
         # Check if any object are present at that new position. if yes, MacGyver
         # put it in his back pack and that object is removed from the list.
@@ -125,30 +126,28 @@ def play(loop_main,loop_menu,loop_play, game_status):
             if macgyver_instance.xy_position == elt.xy_position and elt.cell_type == 3\
              and len(macgyver_instance.collected_objects) == 3:
                 game_status = 1
-                loop_main = True
-                loop_menu = True
-                loop_play = False
+                loops_instance.main = True
+                loops_instance.menu = True
+                loops_instance.play = False
             if macgyver_instance.xy_position == elt.xy_position and elt.cell_type == 3\
              and len(macgyver_instance.collected_objects) < 3:
                 game_status = 2
-                loop_main = True
-                loop_menu = True
-                loop_play = False
+                loops_instance.main = True
+                loops_instance.menu = True
+                loops_instance.play = False
         
         #Calls "Play" displays functions
         show_in_pygame(macgyver_instance,grid_instance,objects_instance,guard_instance)
 
-    return loop_main,loop_menu,loop_play,game_status
+    return loops_instance,game_status
 
 # Main loop
 def main():
-    loop_main = True
-    loop_menu = True
-    loop_play = True
+    loops_instance = loop.Loop()
     game_status = 0
-    while loop_main:
-        loop_main,loop_menu,loop_play = menu(loop_main,loop_menu,loop_play,game_status)
-        loop_main,loop_menu,loop_play,game_status = play(loop_main,loop_menu,loop_play,game_status)
+    while loops_instance.main:
+        loops_instance = menu(loops_instance,game_status)
+        loops_instance,game_status = play(loops_instance,game_status)
 
 main()
 
