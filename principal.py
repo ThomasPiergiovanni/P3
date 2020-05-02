@@ -9,6 +9,7 @@ import constants as constants
 import classes as classes
 import grid as grid
 import cell as cell
+import objects as objects
 
 import functions as functions
 
@@ -39,7 +40,7 @@ def show_in_menu(game_status):
     pygame.display.update()
 
 # groups all displays functions used for "play"
-def show_in_pygame (mac_gyver,grid_instance,objects,guard):
+def show_in_pygame (mac_gyver,grid_instance,objects_instance,guard):
 
     screen.fill((0,0,0))
     
@@ -47,7 +48,7 @@ def show_in_pygame (mac_gyver,grid_instance,objects,guard):
     grid.Grid.show_grid(grid_instance,screen)
 
     #Calls "display objects"
-    classes.Objects.show_objects(objects,screen)    
+    objects.Objects.show_objects(objects_instance,screen)    
 
     #Calls "display the guard"
     classes.Guard.show_guard(guard,screen)
@@ -93,8 +94,8 @@ def play(loop_main,loop_menu,loop_play, game_status):
     cell.Cell.initialize_cells(grid_instance)
 
     # Create objects instances
-    objects = classes.Objects()
-    classes.Item.initialize_items(objects,grid_instance)
+    objects_instance = objects.Objects()
+    classes.Item.initialize_items(objects_instance,grid_instance)
 
     # Create guard instance
     guard = classes.Guard()
@@ -142,11 +143,11 @@ def play(loop_main,loop_menu,loop_play, game_status):
 
         # Check if any object are present at that new position. if yes, MacGyver
         # put it in his back pack and that object is removed from the list.
-        for i, elt in enumerate (objects.items):
+        for i, elt in enumerate (objects_instance.items):
             if elt.xy_position == mac_gyver.xy_position:
                 object_name = elt.object_name
                 mac_gyver.collected_objects.append(object_name)
-                del objects.items[i]
+                del objects_instance.items[i]
 
         # When arriving at the guard, checks whether MacCheck has collected 
         # all objects or not        
@@ -165,7 +166,7 @@ def play(loop_main,loop_menu,loop_play, game_status):
                 loop_play = False
         
         #Calls "Play" displays functions
-        show_in_pygame(mac_gyver,grid_instance,objects,guard)
+        show_in_pygame(mac_gyver,grid_instance,objects_instance,guard)
 
     return loop_main,loop_menu,loop_play,game_status
 
