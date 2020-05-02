@@ -10,60 +10,57 @@ import objects as objects
 import item as item
 import guard as guard
 import loop as loop
+import game as game
 
 import functions as functions
 
-
-pygame.init()
-screen = pygame.display.set_mode((480,580))
-pygame.display.set_caption("Mac Gyver")
-icon = pygame.image.load (constants.IMAGE_MACGYVER)
-pygame.display.set_icon(icon)
+# game_instance = game.Game()
 
 # groups all displays functions used for "menu"
-def show_in_menu(game_status):
-    screen.fill((0,0,0))
+def show_in_menu(game_instance, game_status):
+    game_instance.screen.fill((0,0,0))
 
     #Calls "displays winner message"
     if game_status == 1:
-        functions.show_game_winner(screen)
+        functions.show_game_winner(game_instance.screen)
 
     #Calls "display looser message"
     if game_status == 2:
-        functions.show_game_over (screen)
+        functions.show_game_over (game_instance.screen)
 
     if game_status == 0:
-        functions.show_menu_welcome (screen)
+        functions.show_menu_welcome (game_instance.screen)
 
-    functions.show_menu_message(screen)
+    functions.show_menu_message(game_instance.screen)
 
     pygame.display.update()
 
 # groups all displays functions used for "play"
-def show_in_pygame (macgyver_instance,grid_instance,objects_instance,guard_instance):
+def show_in_pygame (game_instance, macgyver_instance,grid_instance,\
+ objects_instance,guard_instance):
 
-    screen.fill((0,0,0))
+    game_instance.screen.fill((0,0,0))
     
     #Calls "display cells"
-    grid.Grid.show_grid(grid_instance,screen)
+    grid.Grid.show_grid(grid_instance,game_instance.screen)
 
     #Calls "display objects"
-    objects.Objects.show_objects(objects_instance,screen)    
+    objects.Objects.show_objects(objects_instance,game_instance.screen)    
 
     #Calls "display the guard"
-    guard.Guard.show_guard(guard_instance,screen)
+    guard.Guard.show_guard(guard_instance,game_instance.screen)
 
     #Calls "displays MacGyver"
-    macgyver.MacGyver.show(macgyver_instance,screen)
+    macgyver.MacGyver.show(macgyver_instance,game_instance.screen)
 
     #Calls "backpack message"
 
-    functions.show_game_status(macgyver_instance,screen)
+    functions.show_game_status(macgyver_instance,game_instance.screen)
 
     pygame.display.update()
  
 # "Menu" page loop
-def menu(loops_instance,game_status):
+def menu(loops_instance,game_instance, game_status):
     while loops_instance.menu:
         pygame.time.Clock().tick(30)
         for event in pygame.event.get():
@@ -81,11 +78,11 @@ def menu(loops_instance,game_status):
                     loops_instance.play = False
 
         #calls "Menu" display function
-        show_in_menu(game_status)
+        show_in_menu(game_instance, game_status)
     return loops_instance      
  
  # "Game" program       
-def play(loops_instance, game_status):
+def play(loops_instance, game_instance, game_status):
 
     # Create cells and grid instances
     grid_instance = grid.Grid()
@@ -128,7 +125,8 @@ def play(loops_instance, game_status):
                 loops_instance.play = False
         
         #Calls "Play" displays functions
-        show_in_pygame(macgyver_instance,grid_instance,objects_instance,guard_instance)
+        show_in_pygame(game_instance, macgyver_instance,grid_instance,\
+         objects_instance,guard_instance)
 
     return loops_instance,game_status
 
@@ -136,10 +134,9 @@ def play(loops_instance, game_status):
 def main():
     loops_instance = loop.Loop()
     game_status = 0
+    game_instance = game.Game()
     while loops_instance.main:
-        loops_instance = menu(loops_instance,game_status)
-        loops_instance,game_status = play(loops_instance,game_status)
+        loops_instance = menu(loops_instance,game_instance, game_status)
+        loops_instance,game_status = play(loops_instance,game_instance, game_status)
 
 main()
-
-# os.system("pause")
