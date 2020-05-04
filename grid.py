@@ -8,7 +8,7 @@ class Grid:
         self.cells =[]
 
     # method do display the grid
-    def show_grid (self,screen):
+    def show (self,screen):
         for cell in self.cells:
             x_display = cell.xy_position[0] * constants.CELL_SIZE
             y_display = cell.xy_position[1] * constants.CELL_SIZE

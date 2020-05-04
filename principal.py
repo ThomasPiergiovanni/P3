@@ -10,38 +10,12 @@ import objects as objects
 import item as item
 import guard as guard
 import loop as loop
-import game as game
+import gameboard as gameboard
 
-import functions as functions
 
-# game_instance = game.Game()
-
-# groups all displays functions used for "play"
-def show_in_pygame (game_instance, macgyver_instance,grid_instance,\
- objects_instance,guard_instance):
-
-    game_instance.screen.fill((0,0,0))
-    
-    #Calls "display cells"
-    grid.Grid.show_grid(grid_instance,game_instance.screen)
-
-    #Calls "display objects"
-    objects.Objects.show_objects(objects_instance,game_instance.screen)    
-
-    #Calls "display the guard"
-    guard.Guard.show_guard(guard_instance,game_instance.screen)
-
-    #Calls "displays MacGyver"
-    macgyver.MacGyver.show(macgyver_instance,game_instance.screen)
-
-    #Calls "backpack message"
-
-    game.Game.status(game_instance, macgyver_instance)
-
-    pygame.display.update()
  
 # "Menu" page loop
-def menu(loops_instance,game_instance, game_status):
+def menu(loops_instance,gameboard_instance, game_status):
     while loops_instance.menu:
         pygame.time.Clock().tick(30)
         for event in pygame.event.get():
@@ -59,11 +33,11 @@ def menu(loops_instance,game_instance, game_status):
                     loops_instance.play = False
 
         #calls "Menu" display function
-        game.Game.show_menu(game_instance, game_status)
+        gameboard.Gameboard.show_menu(gameboard_instance, game_status)
     return loops_instance      
  
  # "Game" program       
-def play(loops_instance, game_instance, game_status):
+def play(loops_instance, gameboard_instance, game_status):
 
     # Create cells and grid instances
     grid_instance = grid.Grid()
@@ -106,7 +80,7 @@ def play(loops_instance, game_instance, game_status):
                 loops_instance.play = False
         
         #Calls "Play" displays functions
-        show_in_pygame(game_instance, macgyver_instance,grid_instance,\
+        gameboard.Gameboard.show_game(gameboard_instance, macgyver_instance,grid_instance,\
          objects_instance,guard_instance)
 
     return loops_instance,game_status
@@ -115,9 +89,9 @@ def play(loops_instance, game_instance, game_status):
 def main():
     loops_instance = loop.Loop()
     game_status = 0
-    game_instance = game.Game()
+    gameboard_instance = gameboard.Gameboard()
     while loops_instance.main:
-        loops_instance = menu(loops_instance,game_instance, game_status)
-        loops_instance,game_status = play(loops_instance,game_instance, game_status)
+        loops_instance = menu(loops_instance,gameboard_instance, game_status)
+        loops_instance,game_status = play(loops_instance,gameboard_instance, game_status)
 
 main()

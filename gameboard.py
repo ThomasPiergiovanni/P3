@@ -1,9 +1,12 @@
 #-*-coding:utf-8 -*
 import pygame
 import constants as constants
-import functions as functions
+import macgyver as macgyver
+import grid as grid
+import objects as objects
+import guard as guard
 
-class Game:
+class Gameboard:
     def __init__(self):
         pygame.init()
         self.screen = pygame.display.set_mode((480,580))
@@ -15,15 +18,32 @@ class Game:
         self.screen.fill((0,0,0))
         #"Welcome message"
         if game_status == 0:
-            Game.welcome (self)
+            Gameboard.welcome (self)
         #"winner message"
         if game_status == 1:
-            Game.winner(self)
+            Gameboard.winner(self)
         #"looser message"
         if game_status == 2:
-            Game.looser (self)
+            Gameboard.looser (self)
         #"question message"
-        Game.question(self)
+        Gameboard.question(self)
+
+        pygame.display.update()
+
+    def show_game(self,macgyver_instance,grid_instance,\
+     objects_instance,guard_instance):
+
+        self.screen.fill((0,0,0))
+        #Calls "display cells"
+        grid.Grid.show(grid_instance,self.screen)
+        #Calls "display objects"
+        objects.Objects.show(objects_instance,self.screen)    
+        #Calls "display the guard"
+        guard.Guard.show(guard_instance,self.screen)
+        #Calls "displays MacGyver"
+        macgyver.MacGyver.show(macgyver_instance,self.screen)
+        #Calls "backpack message"
+        Gameboard.status(self, macgyver_instance)
 
         pygame.display.update()
 

@@ -8,7 +8,7 @@ class Objects:
         self.items =[]
 
 	# method do display the objects
-    def show_objects (self,screen):
+    def show(self,screen):
         for item in self.items:
             x_display = item.xy_position[0] * constants.CELL_SIZE
             y_display = item.xy_position[1] * constants.CELL_SIZE

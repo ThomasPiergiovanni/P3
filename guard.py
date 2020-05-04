@@ -16,7 +16,7 @@ class Guard:
         self.xy_position = xy_position[0]  
     
     # method do display the guard   
-    def show_guard(self,screen):
+    def show(self,screen):
         x_display = self.xy_position[0] * constants.CELL_SIZE
         y_display = self.xy_position[1] * constants.CELL_SIZE
         screen.blit(self.image,(x_display,y_display))
