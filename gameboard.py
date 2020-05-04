@@ -30,7 +30,7 @@ class Gameboard:
 
         pygame.display.update()
 
-    def show_game(self,macgyver_instance,grid_instance,\
+    def show_play(self,macgyver_instance,grid_instance,\
      objects_instance,guard_instance):
 
         self.screen.fill((0,0,0))

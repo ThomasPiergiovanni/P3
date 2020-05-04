@@ -2,7 +2,7 @@ import pygame
 import gameboard as gameboard
 import status as status
 
-class Menu():
+class Menu:
 	def __init__(self):
 		self.speed = pygame.time.Clock().tick(30)
 
