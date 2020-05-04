@@ -35,12 +35,12 @@ def show_game_over(screen):
     screen.blit(game, (x,y))
 
 # Displays winner on "play" page
-def show_game_winner (screen):
-    font = pygame.font.Font('freesansbold.ttf', 46)
-    x = 105
-    y = 250
-    you = font.render("You\'ve won!",True, (255,255,255))
-    screen.blit(you, (x,y))
+# def show_game_winner (screen):
+#     font = pygame.font.Font('freesansbold.ttf', 46)
+#     x = 105
+#     y = 250
+#     you = font.render("You\'ve won!",True, (255,255,255))
+#     screen.blit(you, (x,y))
 
 # Displays amount of collected objects on "play" page
 def show_game_status(mac_gyver,screen):
