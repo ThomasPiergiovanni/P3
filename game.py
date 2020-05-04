@@ -21,9 +21,9 @@ class Game:
             Game.winner(self)
         #"looser message"
         if game_status == 2:
-            functions.show_game_over (self.screen)
+            Game.looser (self)
+        #"question message"
         Game.question(self)
-
 
         pygame.display.update()
 
@@ -47,10 +47,16 @@ class Game:
          ,True, (255,255,0))
         self.screen.blit(message, (x,y))
 
-    # Displays winner on "play" page
     def winner (self):
         font = pygame.font.Font('freesansbold.ttf', 46)
         x = 105
         y = 250
         message = font.render("You\'ve won!",True, (255,255,255))
+        self.screen.blit(message, (x,y))
+
+    def looser(self):
+        font = pygame.font.Font('freesansbold.ttf', 46)
+        x = 117
+        y = 250
+        message = font.render("You\'ve lost ",True, (255,255,255))
         self.screen.blit(message, (x,y))

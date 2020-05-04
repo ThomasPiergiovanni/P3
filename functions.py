@@ -27,12 +27,12 @@ import pygame
 
 
 # Displays game over on "play" page
-def show_game_over(screen):
-    font = pygame.font.Font('freesansbold.ttf', 46)
-    x = 117
-    y = 250
-    game = font.render("You\'ve lost ",True, (255,255,255))
-    screen.blit(game, (x,y))
+# def show_game_over(screen):
+#     font = pygame.font.Font('freesansbold.ttf', 46)
+#     x = 117
+#     y = 250
+#     game = font.render("You\'ve lost ",True, (255,255,255))
+#     screen.blit(game, (x,y))
 
 # Displays winner on "play" page
 # def show_game_winner (screen):
