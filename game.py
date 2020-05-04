@@ -60,3 +60,13 @@ class Game:
         y = 250
         message = font.render("You\'ve lost ",True, (255,255,255))
         self.screen.blit(message, (x,y))
+
+    def status(self, macgyver_instance):
+
+        font = pygame.font.Font('freesansbold.ttf', 12)
+        x = 0
+        y = 490
+        backpack = font.render("Collected objects: "+\
+         str(len(macgyver_instance.collected_objects)) + "/3",\
+          True, (255,255,0))
+        self.screen.blit(backpack, (x,y))

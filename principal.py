@@ -36,7 +36,7 @@ def show_in_pygame (game_instance, macgyver_instance,grid_instance,\
 
     #Calls "backpack message"
 
-    functions.show_game_status(macgyver_instance,game_instance.screen)
+    game.Game.status(game_instance, macgyver_instance)
 
     pygame.display.update()
  
