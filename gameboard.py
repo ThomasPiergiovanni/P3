@@ -34,15 +34,10 @@ class Gameboard:
      objects_instance,guard_instance):
 
         self.screen.fill((0,0,0))
-        #Calls "display cells"
         grid.Grid.show(grid_instance,self.screen)
-        #Calls "display objects"
         objects.Objects.show(objects_instance,self.screen)    
-        #Calls "display the guard"
         guard.Guard.show(guard_instance,self.screen)
-        #Calls "displays MacGyver"
         macgyver.MacGyver.show(macgyver_instance,self.screen)
-        #Calls "backpack message"
         Gameboard.status(self, macgyver_instance)
 
         pygame.display.update()

@@ -9,3 +9,8 @@ class Loop:
         self.main = False
         self.menu = False
         self.play = False
+
+    def play_game(self):
+        self.main = True
+        self.menu = False
+        self.play = True

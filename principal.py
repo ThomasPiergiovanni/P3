@@ -19,18 +19,12 @@ def menu(loops_instance,gameboard_instance, game_status):
     while loops_instance.menu:
         pygame.time.Clock().tick(30)
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+            if event.type == pygame.QUIT or\
+             (event.type == pygame.KEYDOWN and event.key == pygame.K_n):
                 loop.Loop.quit_game(loops_instance)
-            if event.type == pygame.KEYDOWN:
-                # move right
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_y:
                 if event.key == pygame.K_y:
-                    loops_instance.main = True
-                    loops_instance.menu = False
-                    loops_instance.play = True
-                if event.key == pygame.K_n:
-                    loops_instance.main = False
-                    loops_instance.menu = False
-                    loops_instance.play = False
+                    loop.Loop.play_game(loops_instance)
 
         #calls "Menu" display function
         gameboard.Gameboard.show_menu(gameboard_instance, game_status)
