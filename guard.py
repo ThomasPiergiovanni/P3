@@ -1,6 +1,5 @@
 #-*-coding:utf-8 -*
 import pygame
-
 import constants as constants
 
 # Guard class

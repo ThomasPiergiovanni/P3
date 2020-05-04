@@ -2,7 +2,7 @@
 import pygame
 
 import constants as constants
-import loop as loop
+import status as status
 
 # MacGyver class           
 class MacGyver:   
@@ -23,11 +23,11 @@ class MacGyver:
         y_display = self.xy_position[1] * constants.CELL_SIZE
         screen.blit(self.image,(x_display,y_display))
 
-    def move(self,loops_instance):
+    def move(self,status_instance):
         new_position = 0
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                loop.Loop.quit_game(loops_instance)
+                status.Status.quit_game(status_instance)
 
             # Checks MacGyver future position based on key stroke
             if event.type == pygame.KEYDOWN:

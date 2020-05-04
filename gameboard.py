@@ -14,16 +14,16 @@ class Gameboard:
         self.icon = pygame.image.load (constants.IMAGE_MACGYVER)
         pygame.display.set_icon(self.icon)
 
-    def show_menu(self, game_status):
+    def show_menu(self, status_instance):
         self.screen.fill((0,0,0))
         #"Welcome message"
-        if game_status == 0:
+        if status_instance.game == 0:
             Gameboard.welcome (self)
         #"winner message"
-        if game_status == 1:
+        if status_instance.game == 1:
             Gameboard.winner(self)
         #"looser message"
-        if game_status == 2:
+        if status_instance.game == 2:
             Gameboard.looser (self)
         #"question message"
         Gameboard.question(self)

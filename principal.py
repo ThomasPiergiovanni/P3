@@ -9,30 +9,14 @@ import cell as cell
 import objects as objects
 import item as item
 import guard as guard
-import loop as loop
+import status as status
 import gameboard as gameboard
 import menu as menu
 
 
  
-# "Menu" page loop
-# def menu(loops_instance,gameboard_instance, game_status):
-#     while loops_instance.menu:
-#         pygame.time.Clock().tick(30)
-#         for event in pygame.event.get():
-#             if event.type == pygame.QUIT or\
-#              (event.type == pygame.KEYDOWN and event.key == pygame.K_n):
-#                 loop.Loop.quit_game(loops_instance)
-#             if event.type == pygame.KEYDOWN and event.key == pygame.K_y:
-#                 if event.key == pygame.K_y:
-#                     loop.Loop.play_game(loops_instance)
-
-#         #calls "Menu" display function
-#         gameboard.Gameboard.show_menu(gameboard_instance, game_status)
-#     return loops_instance      
- 
  # "Game" program       
-def play(loops_instance, gameboard_instance, game_status):
+def play(status_instance, gameboard_instance):
 
     # Create cells and grid instances
     grid_instance = grid.Grid()
@@ -52,10 +36,10 @@ def play(loops_instance, gameboard_instance, game_status):
 
     # "Game" page loop 
     pygame.key.set_repeat(400, 30)
-    while loops_instance.play:
+    while status_instance.play:
         pygame.time.Clock().tick(30)
         new_position = macgyver.MacGyver.move(macgyver_instance,\
-         loops_instance)
+         status_instance)
         macgyver.MacGyver.true_move(macgyver_instance,\
          new_position,grid_instance)
         macgyver.MacGyver.collect(macgyver_instance, objects_instance)
@@ -63,27 +47,26 @@ def play(loops_instance, gameboard_instance, game_status):
         for elt in grid_instance.cells:
             if macgyver_instance.xy_position == elt.xy_position and elt.cell_type == 3\
              and len(macgyver_instance.collected_objects) == 3:
-                game_status = 1
-                loop.Loop.play_end(loops_instance)
+                status_instance.game = 1
+                status.Status.play_end(status_instance)
             if macgyver_instance.xy_position == elt.xy_position and elt.cell_type == 3\
              and len(macgyver_instance.collected_objects) < 3:
-                game_status = 2
-                loop.Loop.play_end(loops_instance)
+                status_instance.game = 2
+                status.Status.play_end(status_instance)
         
         #Calls "Play" displays functions
         gameboard.Gameboard.show_game(gameboard_instance, macgyver_instance,grid_instance,\
          objects_instance,guard_instance)
 
-    return loops_instance,game_status
+    return status_instance
 
 # Main loop
 def main():
-    loops_instance = loop.Loop()
-    game_status = 0
+    status_instance = status.Status()
     gameboard_instance = gameboard.Gameboard()
-    while loops_instance.main:
+    while status_instance.main:
         menu_instance = menu.Menu()
-        loops_instance = menu.Menu.loop(menu_instance,loops_instance,gameboard_instance, game_status)
-        loops_instance,game_status = play(loops_instance,gameboard_instance, game_status)
+        status_instance = menu.Menu.loop(menu_instance,status_instance,gameboard_instance)
+        status_instance = play(status_instance,gameboard_instance)
 
 main()
