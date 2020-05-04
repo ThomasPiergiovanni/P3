@@ -13,17 +13,19 @@ import status as status
 import gameboard as gameboard
 import menu as menu
 import play as play
+import main as main
 
 
 
 # Main loop
-def main():
-    status_instance = status.Status()
-    gameboard_instance = gameboard.Gameboard()
-    while status_instance.main:
-        menu_instance = menu.Menu()
-        status_instance = menu.Menu.loop(menu_instance,status_instance,gameboard_instance)
-        play_instance = play.Play()
-        status_instance = play.Play.loop(play_instance, status_instance,gameboard_instance)
+# def main():
+#     status_instance = status.Status()
+#     gameboard_instance = gameboard.Gameboard()
+#     while status_instance.main:
+#         menu_instance = menu.Menu()
+#         status_instance = menu.Menu.loop(menu_instance,status_instance,gameboard_instance)
+#         play_instance = play.Play()
+#         status_instance = play.Play.loop(play_instance, status_instance,gameboard_instance)
 
-main()
+main_instance = main.Main()
+main.Main.loop(main_instance)
