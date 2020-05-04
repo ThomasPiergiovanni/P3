@@ -4,26 +4,26 @@ import pygame
 
 
 # Displays game over on "play" page
-def show_menu_welcome(screen):
-    font = pygame.font.Font('freesansbold.ttf', 46)
-    x = 110
-    y = 195
-    game = font.render("Welcome to",True, (255,255,255))
-    screen.blit(game, (x,y))
-    font = pygame.font.Font('freesansbold.ttf', 46)
-    x = 45
-    y = 252
-    over = font.render("Mac Gyver Game",True, (255,255,255))
-    screen.blit(over, (x,y))
+# def show_menu_welcome(screen):
+#     font = pygame.font.Font('freesansbold.ttf', 46)
+#     x = 110
+#     y = 195
+#     game = font.render("Welcome to",True, (255,255,255))
+#     screen.blit(game, (x,y))
+#     font = pygame.font.Font('freesansbold.ttf', 46)
+#     x = 45
+#     y = 252
+#     over = font.render("Mac Gyver Game",True, (255,255,255))
+#     screen.blit(over, (x,y))
 
 # Displays  "Play or Quit" on "Menu page"
-def show_menu_message(screen):
-    font = pygame.font.Font('freesansbold.ttf', 20)
-    x = 85
-    y = 400
-    welcome = font.render("Do you want to play (press y/n)?"\
-     ,True, (255,255,0))
-    screen.blit(welcome, (x,y))
+# def show_menu_message(screen):
+#     font = pygame.font.Font('freesansbold.ttf', 20)
+#     x = 85
+#     y = 400
+#     welcome = font.render("Do you want to play (press y/n)?"\
+#      ,True, (255,255,0))
+#     screen.blit(welcome, (x,y))
 
 
 # Displays game over on "play" page
