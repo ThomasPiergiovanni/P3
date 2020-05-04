@@ -11,24 +11,25 @@ import item as item
 import guard as guard
 import loop as loop
 import gameboard as gameboard
+import menu as menu
 
 
  
 # "Menu" page loop
-def menu(loops_instance,gameboard_instance, game_status):
-    while loops_instance.menu:
-        pygame.time.Clock().tick(30)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT or\
-             (event.type == pygame.KEYDOWN and event.key == pygame.K_n):
-                loop.Loop.quit_game(loops_instance)
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_y:
-                if event.key == pygame.K_y:
-                    loop.Loop.play_game(loops_instance)
+# def menu(loops_instance,gameboard_instance, game_status):
+#     while loops_instance.menu:
+#         pygame.time.Clock().tick(30)
+#         for event in pygame.event.get():
+#             if event.type == pygame.QUIT or\
+#              (event.type == pygame.KEYDOWN and event.key == pygame.K_n):
+#                 loop.Loop.quit_game(loops_instance)
+#             if event.type == pygame.KEYDOWN and event.key == pygame.K_y:
+#                 if event.key == pygame.K_y:
+#                     loop.Loop.play_game(loops_instance)
 
-        #calls "Menu" display function
-        gameboard.Gameboard.show_menu(gameboard_instance, game_status)
-    return loops_instance      
+#         #calls "Menu" display function
+#         gameboard.Gameboard.show_menu(gameboard_instance, game_status)
+#     return loops_instance      
  
  # "Game" program       
 def play(loops_instance, gameboard_instance, game_status):
@@ -81,7 +82,8 @@ def main():
     game_status = 0
     gameboard_instance = gameboard.Gameboard()
     while loops_instance.main:
-        loops_instance = menu(loops_instance,gameboard_instance, game_status)
+        menu_instance = menu.Menu()
+        loops_instance = menu.Menu.loop(menu_instance,loops_instance,gameboard_instance, game_status)
         loops_instance,game_status = play(loops_instance,gameboard_instance, game_status)
 
 main()
