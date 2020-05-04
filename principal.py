@@ -63,15 +63,11 @@ def play(loops_instance, gameboard_instance, game_status):
             if macgyver_instance.xy_position == elt.xy_position and elt.cell_type == 3\
              and len(macgyver_instance.collected_objects) == 3:
                 game_status = 1
-                loops_instance.main = True
-                loops_instance.menu = True
-                loops_instance.play = False
+                loop.Loop.play_end(loops_instance)
             if macgyver_instance.xy_position == elt.xy_position and elt.cell_type == 3\
              and len(macgyver_instance.collected_objects) < 3:
                 game_status = 2
-                loops_instance.main = True
-                loops_instance.menu = True
-                loops_instance.play = False
+                loop.Loop.play_end(loops_instance)
         
         #Calls "Play" displays functions
         gameboard.Gameboard.show_game(gameboard_instance, macgyver_instance,grid_instance,\

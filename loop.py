@@ -14,3 +14,8 @@ class Loop:
         self.main = True
         self.menu = False
         self.play = True
+
+    def play_end(self):
+        self.main = True
+        self.menu = True
+        self.play = False
