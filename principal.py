@@ -17,23 +17,23 @@ import functions as functions
 # game_instance = game.Game()
 
 # groups all displays functions used for "menu"
-def show_in_menu(game_instance, game_status):
-    game_instance.screen.fill((0,0,0))
+# def show_in_menu(game_instance, game_status):
+#     game_instance.screen.fill((0,0,0))
 
-    #Calls "displays winner message"
-    if game_status == 1:
-        functions.show_game_winner(game_instance.screen)
+#     #Calls "displays winner message"
+#     if game_status == 1:
+#         functions.show_game_winner(game_instance.screen)
 
-    #Calls "display looser message"
-    if game_status == 2:
-        functions.show_game_over (game_instance.screen)
+#     #Calls "display looser message"
+#     if game_status == 2:
+#         functions.show_game_over (game_instance.screen)
 
-    if game_status == 0:
-        functions.show_menu_welcome (game_instance.screen)
+#     if game_status == 0:
+#         functions.show_menu_welcome (game_instance.screen)
 
-    functions.show_menu_message(game_instance.screen)
+#     functions.show_menu_message(game_instance.screen)
 
-    pygame.display.update()
+#     pygame.display.update()
 
 # groups all displays functions used for "play"
 def show_in_pygame (game_instance, macgyver_instance,grid_instance,\
@@ -78,7 +78,7 @@ def menu(loops_instance,game_instance, game_status):
                     loops_instance.play = False
 
         #calls "Menu" display function
-        show_in_menu(game_instance, game_status)
+        game.Game.show_menu(game_instance, game_status)
     return loops_instance      
  
  # "Game" program       
