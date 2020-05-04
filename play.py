@@ -12,8 +12,6 @@ import gameboard as gameboard
 
 class Play:
     def __init__(self):
-        self.keysdown = pygame.key.set_repeat(400, 30) 
-        self.speed = pygame.time.Clock().tick(30)
 
         self.grid = grid.Grid()
         cell.Cell.initialize_cells(self.grid)
@@ -26,8 +24,9 @@ class Play:
 
     def loop(self, status_instance, gameboard_instance):
 
+        pygame.key.set_repeat(400, 30)
         while status_instance.play:
-            self.speed 
+            pygame.time.Clock().tick(30)  
             new_position = macgyver.MacGyver.move(self.macgyver,\
              status_instance)
             macgyver.MacGyver.true_move(self.macgyver,\
