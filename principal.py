@@ -1,5 +1,5 @@
 #-*-coding:utf-8 -*
-"""Launch game module.
+"""Start game module.
 """
 import main
 

@@ -2,7 +2,7 @@
 """Cell module
 """
 
-class Cell():
+class Cell:
     """Cell class
     """
     def __init__(self, xy_position, cell_type, cell_image):

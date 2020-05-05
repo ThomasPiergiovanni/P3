@@ -16,7 +16,7 @@ class Play:
         grid.Grid.read_source(self.grid)
         grid.Grid.initialize(self.grid)
         self.objects = objects.Objects()
-        item.Item.initialize_items(self.objects, self.grid)
+        objects.Objects.initialize(self.objects, self.grid)
         self.guard = guard.Guard()
         guard.Guard.initial_position(self.guard, self.grid)
         self.macgyver = macgyver.MacGyver()
