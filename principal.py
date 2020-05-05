@@ -2,4 +2,4 @@
 import main
 
 main_instance = main.Main()
-main.Main.loop(main_instance)
+main.Main.main_loop(main_instance)

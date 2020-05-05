@@ -3,23 +3,25 @@
 import pygame
 import status
 import gameboard
-import stages
+import play
 
 class Main:
     """Root of the game"""
     def __init__(self):
         self.status = status.Status()
         self.gameboard = gameboard.Gameboard()
-        self.stages = 0
-    def loop(self):
+        self.play = play.Play()
+    def main_loop(self):
         """Method initalizing the menu and play loops"""
         while self.status.main:
-            Main.menu(self)
-            self.stages = stages.Stages()
-            # stages.Stages.menu(self.stages, self.status, self.gameboard)
-            stages.Stages.play(self.stages, self.status, self.gameboard)
+            Main.menu_loop(self)
+            Main.play_loop(self)
 
-    def menu (self):
+    def menu_loop (self):
+        """Menu game stage loop. Loop can be left either by
+        playing the game (keydow == y) or by quitting the programm
+        (keydow == n or screen "x" button).
+        """
         while self.status.menu:
             pygame.time.Clock().tick(30)
             for event in pygame.event.get():
@@ -30,5 +32,19 @@ class Main:
                     if event.key == pygame.K_y:
                         status.Status.play_game(self.status)
             gameboard.Gameboard.show_menu(self.gameboard, self.status)
+
+    def play_loop(self):
+        """Play game stage loop. Loop can be left either by
+        ending the game (reaching the guard) or by quitting the programm
+        (screen "x" button).
+        """
+        pygame.key.set_repeat(400, 30)
+        while self.status.play:
+            pygame.time.Clock().tick(30)
+            play.Play.actions(self.play, self.status)
+            play.Play.finish (self.play, self.status)
+            gameboard.Gameboard.show_play(self.gameboard, \
+            self.play.macgyver, self.play.grid, self.play.objects, \
+            self.play.guard)
 
 
