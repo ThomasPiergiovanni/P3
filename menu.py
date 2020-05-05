@@ -1,11 +1,18 @@
+#-*-coding:utf-8 -*
+"""Menu game stage module"""
 import pygame
-import gameboard as gameboard
-import status as status
+import gameboard
+import status
 
 class Menu:
+    """Menu game stage class"""
     def __init__(self):
-    	pass
-    def loop(self, status_instance,gameboard_instance):
+        pass
+    def loop(self, status_instance, gameboard_instance):
+        """Menu game stage loop. Loop can be left either by
+        playing the game (keydow == y) or by quitting the programm
+        (keydow == n or screen "x" button).
+        """
         while status_instance.menu:
             pygame.time.Clock().tick(30)
             for event in pygame.event.get():
@@ -15,7 +22,5 @@ class Menu:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_y:
                     if event.key == pygame.K_y:
                         status.Status.play_game(status_instance)
-
-            #calls "Menu" display function
             gameboard.Gameboard.show_menu(gameboard_instance, status_instance)
-        return status_instance 
+        return status_instance

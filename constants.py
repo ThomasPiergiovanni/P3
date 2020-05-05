@@ -1,14 +1,15 @@
 #-*-coding:utf-8 -*
+"""Programm constants"""
 
 #source data, the labyrinthe
-DATA_FILE ="data/labyrinthe.txt"
+DATA_FILE = "data/labyrinthe.txt"
 
 #labyrinthe dimensions
 NUMBER_OF_CELL_PER_SIDE = 15
 CELL_SIZE = 32
 
 # objects list
-OBJECTS = ["Needle","Plastic tube","Ether"]
+OBJECTS = ["Needle", "Plastic tube", "Ether"]
 
 #game images
 IMAGE_WALL = 'data/wall32.png'
