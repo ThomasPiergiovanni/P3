@@ -1,4 +1,6 @@
 #-*-coding:utf-8 -*
+"""Launch game module.
+"""
 import main
 
 main_instance = main.Main()

@@ -1,12 +1,14 @@
 #-*-coding:utf-8 -*
-"""Module containing Main Class"""
+""" Main module.
+"""
 import pygame
 import status
 import gameboard
 import play
 
 class Main:
-    """Root of the game"""
+    """Main class.
+    """
     def __init__(self):
         self.status = status.Status()
         self.gameboard = gameboard.Gameboard()
@@ -17,7 +19,7 @@ class Main:
             Main.menu_loop(self)
             Main.play_loop(self)
 
-    def menu_loop (self):
+    def menu_loop(self):
         """Menu game stage loop. Loop can be left either by
         playing the game (keydow == y) or by quitting the programm
         (keydow == n or screen "x" button).
@@ -42,9 +44,7 @@ class Main:
         while self.status.play:
             pygame.time.Clock().tick(30)
             play.Play.actions(self.play, self.status)
-            play.Play.finish (self.play, self.status)
+            play.Play.finish(self.play, self.status)
             gameboard.Gameboard.show_play(self.gameboard, \
             self.play.macgyver, self.play.grid, self.play.objects, \
             self.play.guard)
-
-
