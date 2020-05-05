@@ -13,7 +13,8 @@ class Play:
     """
     def __init__(self):
         self.grid = grid.Grid()
-        cell.Cell.initialize_cells(self.grid)
+        grid.Grid.read_source(self.grid)
+        grid.Grid.initialize(self.grid)
         self.objects = objects.Objects()
         item.Item.initialize_items(self.objects, self.grid)
         self.guard = guard.Guard()
