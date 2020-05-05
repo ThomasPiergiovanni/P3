@@ -12,11 +12,13 @@ class Main:
     def __init__(self):
         self.status = status.Status()
         self.gameboard = gameboard.Gameboard()
-        self.play = play.Play()
+        self.play = 0
     def main_loop(self):
-        """Method initalizing the menu and play loops"""
+        """Method initalizing the menu and play loops
+        """
         while self.status.main:
             Main.menu_loop(self)
+            self.play = play.Play()
             Main.play_loop(self)
 
     def menu_loop(self):
@@ -31,8 +33,7 @@ class Main:
                  (event.type == pygame.KEYDOWN and event.key == pygame.K_n):
                     status.Status.quit_game(self.status)
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_y:
-                    if event.key == pygame.K_y:
-                        status.Status.play_game(self.status)
+                    status.Status.play_game(self.status)
             gameboard.Gameboard.show_menu(self.gameboard, self.status)
 
     def play_loop(self):
