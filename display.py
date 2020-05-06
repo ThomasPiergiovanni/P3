@@ -1,5 +1,5 @@
 #-*-coding:utf-8 -*
-"""Gameboard module
+"""Display module
 """
 import pygame
 import constants
@@ -8,8 +8,8 @@ import grid
 import objects
 import guard
 
-class Gameboard:
-    """Gameboard class
+class Display:
+    """Display class
     """
     def __init__(self):
         pygame.init()
@@ -18,20 +18,20 @@ class Gameboard:
         self.icon = pygame.image.load(constants.IMAGE_MACGYVER)
         pygame.display.set_icon(self.icon)
 
-    def show_menu(self, status_instance):
+    def menu(self, status_instance):
         """Method for displaying the right content on "menu" stage.
         """
         self.screen.fill((0, 0, 0))
         if status_instance.game == 0:
-            Gameboard.welcome(self)
+            Display.welcome(self)
         if status_instance.game == 1:
-            Gameboard.winner(self)
+            Display.winner(self)
         if status_instance.game == 2:
-            Gameboard.looser(self)
-        Gameboard.question(self)
+            Display.looser(self)
+        Display.question(self)
         pygame.display.update()
 
-    def show_play(self, macgyver_instance, grid_instance, \
+    def play(self, macgyver_instance, grid_instance, \
     objects_instance, guard_instance):
         """Method for displaying the right content on "play" stage.
         """
@@ -40,7 +40,7 @@ class Gameboard:
         objects.Objects.show(objects_instance, self.screen)
         guard.Guard.show(guard_instance, self.screen)
         macgyver.MacGyver.show(macgyver_instance, self.screen)
-        Gameboard.collection(self, macgyver_instance)
+        Display.collection(self, macgyver_instance)
         pygame.display.update()
 
     def welcome(self):

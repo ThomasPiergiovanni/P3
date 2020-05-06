@@ -3,7 +3,7 @@
 """
 import pygame
 import status
-import gameboard
+import display
 import play
 
 class Main:
@@ -11,7 +11,7 @@ class Main:
     """
     def __init__(self):
         self.status = status.Status()
-        self.gameboard = gameboard.Gameboard()
+        self.display = display.Display()
         self.play = 0
     def main_loop(self):
         """Method initalizing the menu and play loops
@@ -34,7 +34,7 @@ class Main:
                     status.Status.quit_game(self.status)
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_y:
                     status.Status.play_game(self.status)
-            gameboard.Gameboard.show_menu(self.gameboard, self.status)
+            display.Display.menu(self.display, self.status)
 
     def play_loop(self):
         """Play game stage loop. Loop can be left either by
@@ -46,6 +46,6 @@ class Main:
             pygame.time.Clock().tick(30)
             play.Play.actions(self.play, self.status)
             play.Play.finish(self.play, self.status)
-            gameboard.Gameboard.show_play(self.gameboard, \
+            display.Display.play(self.display, \
             self.play.macgyver, self.play.grid, self.play.objects, \
             self.play.guard)
