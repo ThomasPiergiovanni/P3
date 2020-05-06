@@ -29,8 +29,8 @@ class Main:
         while self.status.menu:
             pygame.time.Clock().tick(30)
             for event in pygame.event.get():
-                if event.type == pygame.QUIT or\
-                 (event.type == pygame.KEYDOWN and event.key == pygame.K_n):
+                if event.type == pygame.QUIT or \
+                (event.type == pygame.KEYDOWN and event.key == pygame.K_n):
                     status.Status.quit_game(self.status)
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_y:
                     status.Status.play_game(self.status)
