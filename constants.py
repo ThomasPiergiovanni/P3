@@ -12,6 +12,8 @@ CELL_SIZE = 32
 OBJECTS = ["Needle", "Plastic tube", "Ether"]
 
 #game images
+IMAGE_GAMECOVER = 'data/gamecover480.png'
+
 IMAGE_WALL = 'data/wall32.png'
 IMAGE_PATH = 'data/path32.png'
 IMAGE_START = 'data/start32.png'
@@ -24,5 +26,7 @@ IMAGE_GUARD = 'data/gardien32.png'
 IMAGE_MACGYVER = 'data/macgyver32.png'
 
 #game colors
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
 WHITE = (255, 255, 255)
 YELLOW = (255, 255, 0)

@@ -14,9 +14,10 @@ class Display:
     def __init__(self):
         pygame.init()
         self.screen = pygame.display.set_mode((480, 580))
-        pygame.display.set_caption("Mac Gyver")
+        pygame.display.set_caption("Help MacGyver to escape!")
         self.icon = pygame.image.load(constants.IMAGE_MACGYVER)
         pygame.display.set_icon(self.icon)
+        self.gamecover = pygame.image.load(constants.IMAGE_GAMECOVER).convert_alpha()
 
     def menu(self, status_instance):
         """Method for displaying the right content on "menu" stage.
@@ -28,7 +29,6 @@ class Display:
             Display.winner(self)
         if status_instance.game == 2:
             Display.looser(self)
-        Display.question(self)
         pygame.display.update()
 
     def play(self, macgyver_instance, grid_instance, \
@@ -46,43 +46,44 @@ class Display:
     def welcome(self):
         """Method for displaying "welcome message" on "menu" stage.
         """
-        font = pygame.font.Font('freesansbold.ttf', 46)
-        coo_x = 110
-        coo_y = 195
-        message = font.render("Welcome to", True, constants.WHITE)
-        self.screen.blit(message, (coo_x, coo_y))
-        font = pygame.font.Font('freesansbold.ttf', 46)
-        coo_x = 45
-        coo_y = 252
-        message = font.render("Mac Gyver Game", True, constants.WHITE)
-        self.screen.blit(message, (coo_x, coo_y))
-
-    def question(self):
-        """Method for displaying "question message" on "menu" stage.
-        """
+        self.screen.blit(self.gamecover, (0, 0))
         font = pygame.font.Font('freesansbold.ttf', 20)
         coo_x = 85
-        coo_y = 400
-        message = font.render("Do you want to play (press y/n)?" \
-        , True, constants.YELLOW)
+        coo_y = 510
+        message = font.render("Do you want to play (press y / n)?" \
+        , True, constants.WHITE)
         self.screen.blit(message, (coo_x, coo_y))
 
     def winner(self):
         """Method for displaying "winner message" on "menu" stage.
         """
+        self.screen.blit(self.gamecover, (0, 0))
         font = pygame.font.Font('freesansbold.ttf', 46)
         coo_x = 105
-        coo_y = 250
-        message = font.render("You\'ve won!", True, constants.WHITE)
+        coo_y = 485
+        message = font.render("You\'ve won!", True, constants.GREEN)
+        self.screen.blit(message, (coo_x, coo_y))
+        font = pygame.font.Font('freesansbold.ttf', 20)
+        coo_x = 55
+        coo_y = 545
+        message = font.render("Do you want to play again (press y / n)?" \
+        , True, constants.WHITE)
         self.screen.blit(message, (coo_x, coo_y))
 
     def looser(self):
         """Method for displaying "looser message" on "menu" stage.
         """
+        self.screen.blit(self.gamecover, (0, 0))
         font = pygame.font.Font('freesansbold.ttf', 46)
         coo_x = 117
-        coo_y = 250
-        message = font.render("You\'ve lost ", True, constants.WHITE)
+        coo_y = 485
+        message = font.render("Game oveR ", True, constants.RED)
+        self.screen.blit(message, (coo_x, coo_y))
+        font = pygame.font.Font('freesansbold.ttf', 20)
+        coo_x = 55
+        coo_y = 545
+        message = font.render("Do you want to play again (press y / n)?" \
+        , True, constants.WHITE)
         self.screen.blit(message, (coo_x, coo_y))
 
     def collection(self, macgyver_instance):
