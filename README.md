@@ -1,52 +1,47 @@
 # Project 3 - Help MacGyver to escape!
 
-## 1. Introduction
-This python package is a 2D game named 'Help MacGyver to escape!'. It consist of moving the hero (MacGyver) on a maze and make him escape that place. The hero will be able to leave that place if he reaches the exit. The problem, a guard is protecting the exit and he has no intention to let our hro go out so easily. Therefore, the hero will have to collect all objects dispatch here and there in the maze (a platic tube, a needle and a bottle of ether) in order to, thanks to this inventivity, build a syringe full of ether that will allow him to inject the guard put him to sleep and finally become a free hero again. 
+## 1. Introduction.
+This python package is a 2D game named 'Help MacGyver to escape!'. It consist of moving the hero (MacGyver) on a maze and make him escape that place. The hero will be able to leave that place if he reaches the exit. The problem, a guard is protecting the exit and he has no intention to let our hro go out so easily. Therefore, the hero will have to collect all objects dispatch here and there in the maze (a platic tube, a needle and a bottle of ether). This in order to build a syringe full of ether that will allow him to inject the guard and put him to sleep. This is how, our hero can become a free again. 
 
-## 2. Prerequisite
+## 2. Prerequisite.
+This programm requires the following components:
+* **python3**
+* **pygame==1.9.6**
 
-* python3
-* pygame==1.9.6
-
-## 3. Installation
-
+## 3. Installation.
 ### 3.1. Download.
 Download this repository on your system, at the location that suit you best.
 
 ### 3.2. Python3 install.
-Ensure you have Python 3 installed. If not, you can download it and install it from the [python offical website](https://www.python.org/). You'll find the necessary documentation there.
+Ensure you have **Python 3** installed. If not, you can download it and install it from the [python offical website](https://www.python.org/). You'll find the necessary documentation there.
 
 ### 3.3. Create a vitrtual environment (*optionnal but recommended*).
 In order to avoid python version and libraries conflicts:
-* Create a virtual environnment using
-> venv > 
-package. Example:
-    python -m venv my/game/repository/my_virtual_environnment
-* Activate the created virtual envrionnment. Example:
-    source my/game/repository/my_virtual_environnment/Scripts/activate
+* Create a virtual environment using **venv** package
+> python -m venv game_repository/my_virtual_environment
+* Activate the created virtual envrionnment.
+> source my/game/repository/my_virtual_environment/Scripts/activate
 Documentation for this is also available on [python offical website](https://www.python.org/).
 
 ### 3.4. Pygame install.
-Ensure you have Python 3 installed. If not, you can download it and install it from the [python offical website](https://www.python.org/). You'll find the necessary documentation there.
-Install pygame on you virtual environnement. You can  install it from the [pygame website](https://www.pygame.org/news). You'll find the necessary documentation there to do so.
+Install **pygame** on you virtual environement. You can  install it from the [pygame website](https://www.pygame.org/news). You'll find the necessary documentation there to do so.
 
-### 3.5. Play
+### 3.5. Play.
 The programm is now ready to use. You can lauch xxx.py with your bash:
-'python xxx.py'
+> python xxx.py
 
-### 3.6. Leave the virtual environment
+### 3.6. Leave the virtual environment.
 Once you're done with playing, you should leave the virtual environnement. Simply type
-    deactivate
+> deactivate
 in your bash.
 
-### 3.7. Uninstall
+### 3.7. Uninstall.
 If you want to uninstall the game simply delete the complete repository.
 
-## 4. Settings
+## 4. Settings.
+No settings required. Files & folders must b e used as is and shouldn't be modified.
 
-* No settings required. Files & folders must not be modified.
-
-## 5. User Guide
+## 5. User's Guide.
 
 ### 5.1 Goal:
 The goal is to make the hero escape the maze. For that he must:
