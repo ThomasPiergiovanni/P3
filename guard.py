@@ -11,7 +11,7 @@ class Guard:
         self.xy_position = (0, 0)
         self.image = pygame.image.load(constants.IMAGE_GUARD).convert_alpha()
 
-    def initial_position(self, grid_instance):
+    def position(self, grid_instance):
         """Method sets Guard instance on the appropriate cell.
         """
         xy_position = [elt.xy_position  for elt in grid_instance.cells if \

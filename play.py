@@ -18,9 +18,9 @@ class Play:
         self.objects = objects.Objects()
         objects.Objects.initialize(self.objects, self.grid)
         self.guard = guard.Guard()
-        guard.Guard.initial_position(self.guard, self.grid)
+        guard.Guard.position(self.guard, self.grid)
         self.macgyver = macgyver.MacGyver()
-        macgyver.MacGyver.initial_position(self.macgyver, self.grid)
+        macgyver.MacGyver.position(self.macgyver, self.grid)
 
 
     def actions(self, status_instance):

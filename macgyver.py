@@ -13,7 +13,7 @@ class MacGyver:
         self.image = pygame.image.load('data/macgyver32.png').convert_alpha()
         self.collected_objects = []
 
-    def initial_position(self, grid_instance):
+    def position(self, grid_instance):
         """Method sets MacGyver instance on the appropriate cell.
         """
         xy_position = [elt.xy_position for elt in grid_instance.cells if \
