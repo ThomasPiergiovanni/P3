@@ -49,12 +49,12 @@ class Gameboard:
         font = pygame.font.Font('freesansbold.ttf', 46)
         coo_x = 110
         coo_y = 195
-        message = font.render("Welcome to", True, (255, 255, 255))
+        message = font.render("Welcome to", True, constants.WHITE)
         self.screen.blit(message, (coo_x, coo_y))
         font = pygame.font.Font('freesansbold.ttf', 46)
         coo_x = 45
         coo_y = 252
-        message = font.render("Mac Gyver Game", True, (255, 255, 255))
+        message = font.render("Mac Gyver Game", True, constants.WHITE)
         self.screen.blit(message, (coo_x, coo_y))
 
     def question(self):
@@ -64,7 +64,7 @@ class Gameboard:
         coo_x = 85
         coo_y = 400
         message = font.render("Do you want to play (press y/n)?" \
-        , True, (255, 255, 0))
+        , True, constants.YELLOW)
         self.screen.blit(message, (coo_x, coo_y))
 
     def winner(self):
@@ -73,7 +73,7 @@ class Gameboard:
         font = pygame.font.Font('freesansbold.ttf', 46)
         coo_x = 105
         coo_y = 250
-        message = font.render("You\'ve won!", True, (255, 255, 255))
+        message = font.render("You\'ve won!", True, constants.WHITE)
         self.screen.blit(message, (coo_x, coo_y))
 
     def looser(self):
@@ -82,7 +82,7 @@ class Gameboard:
         font = pygame.font.Font('freesansbold.ttf', 46)
         coo_x = 117
         coo_y = 250
-        message = font.render("You\'ve lost ", True, (255, 255, 255))
+        message = font.render("You\'ve lost ", True, constants.WHITE)
         self.screen.blit(message, (coo_x, coo_y))
 
     def collection(self, macgyver_instance):
@@ -93,5 +93,5 @@ class Gameboard:
         coo_y = 490
         backpack = font.render("Collected objects: "+\
          str(len(macgyver_instance.collected_objects)) + "/3",\
-          True, (255, 255, 0))
+          True, constants.YELLOW)
         self.screen.blit(backpack, (coo_x, coo_y))

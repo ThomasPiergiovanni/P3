@@ -22,3 +22,7 @@ IMAGE_NEEDLE = 'data/needle32.png'
 
 IMAGE_GUARD = 'data/gardien32.png'
 IMAGE_MACGYVER = 'data/macgyver32.png'
+
+#game colors
+WHITE = (255, 255, 255)
+YELLOW = (255, 255, 0)
