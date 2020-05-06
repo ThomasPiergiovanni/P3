@@ -21,7 +21,7 @@ In order to avoid system conflicts:
 >python -m venv game_repository/my_virtual_environment
 >
 * Activate virtual envrionment.
->source my/game/repository/my_virtual_environment/Scripts/activate
+>source my_virtual_environment/Scripts/activate
 >
 Documentation is also available on [python offical website](https://www.python.org/).
 
