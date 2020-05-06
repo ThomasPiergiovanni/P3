@@ -13,14 +13,18 @@ This programm requires the following components:
 Download this repository on your system, at the location that suit you best.
 
 ### 3.2. Python3 install.
-Ensure you have **Python 3** installed. If not, you can download it and install it from the [python offical website](https://www.python.org/). You'll find the necessary documentation there.
+Ensure you have **python 3** installed. If not, you can download it and install it from the [python offical website](https://www.python.org/). You'll find the necessary documentation there.
 
 ### 3.3. Create a vitrtual environment (*optionnal but recommended*).
 In order to avoid python version and libraries conflicts:
 * Create a virtual environment using **venv** package
-> python -m venv game_repository/my_virtual_environment
+'''sh
+python -m venv game_repository/my_virtual_environment
+'''
 * Activate the created virtual envrionnment.
-> source my/game/repository/my_virtual_environment/Scripts/activate<>
+'''sh
+source my/game/repository/my_virtual_environment/Scripts/activate<>
+'''
 Documentation for this is also available on [python offical website](https://www.python.org/).
 
 ### 3.4. Pygame install.
