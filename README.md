@@ -5,8 +5,8 @@ This python package is a 2D game named 'Help MacGyver to escape!'. It consist of
 
 ## 2. Prerequisite.
 This programm requires the following components:
-* **python3**
-* **pygame==1.9.6**
+* python 3
+* pygame==1.9.6
 
 ## 3. Installation.
 ### 3.1. Download.
@@ -20,7 +20,7 @@ In order to avoid python version and libraries conflicts:
 * Create a virtual environment using **venv** package
 > python -m venv game_repository/my_virtual_environment
 * Activate the created virtual envrionnment.
-> source my/game/repository/my_virtual_environment/Scripts/activate
+> source my/game/repository/my_virtual_environment/Scripts/activate<>
 Documentation for this is also available on [python offical website](https://www.python.org/).
 
 ### 3.4. Pygame install.
