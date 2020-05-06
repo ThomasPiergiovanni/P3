@@ -10,40 +10,39 @@ This programm requires the following components:
 
 ## 3. Installation.
 ### 3.1. Download.
-Download this repository on your system, at the location that suit you best.
+Download this repository on your system, at the location that suits you best.
 
 ### 3.2. Python3 install.
 Ensure you have **python 3** installed. If not, you can download it and install it from the [python offical website](https://www.python.org/). You'll find the necessary documentation there.
 
-### 3.3. Create a vitrtual environment (*optionnal but recommended*).
-In order to avoid python version and libraries conflicts:
-* Create a virtual environment using **venv** package
->python -m venv game_repository/my_virtual_environment<
-* Activate the created virtual envrionnment.
->source my/game/repository/my_virtual_environment/Scripts/activate<
-'''
-Documentation for this is also available on [python offical website](https://www.python.org/).
+### 3.3. Create a virttual environment (*optionnal but recommended*).
+In order to avoid system conflicts:
+* Create a virtual environment using **venv** package.
+>python -m venv game_repository/my_virtual_environment
+>
+* Activate virtual envrionment.
+>source my/game/repository/my_virtual_environment/Scripts/activate
+>
+Documentation is also available on [python offical website](https://www.python.org/).
 
 ### 3.4. Pygame install.
-Install **pygame** on you virtual environement. You can  install it from the [pygame website](https://www.pygame.org/news). You'll find the necessary documentation there to do so.
+Install **pygame** on you virtual environement. Documentation for pygame and it's installation can be found on the [pygame website](https://www.pygame.org/news).
 
 ### 3.5. Play.
-The programm is now ready to use. You can lauch xxx.py with your bash:
+The programm is now ready to use. You can launch **xxx.py** with your bash.
 > python xxx.py
+>
 
 ### 3.6. Leave the virtual environment.
-Once you're done with playing, you should leave the virtual environnement. Simply type
+Once you're done with playing, you should leave the virtual environement. Simply type the following in your bash.
 > deactivate
 >
-in your bash.
-> deactivate<blockquote>
-
 
 ### 3.7. Uninstall.
 If you want to uninstall the game simply delete the complete repository.
 
 ## 4. Settings.
-No settings required. Files & folders must b e used as is and shouldn't be modified.
+No settings required. Files & folders must be used as is and shouldn't be modified.
 
 ## 5. User's Guide.
 
@@ -56,6 +55,6 @@ The goal is to make the hero escape the maze. For that he must:
 * Launch the game running the xxx.py file.
 * On 'Menu' page, decide to play the game or not (if not is selected, then the programm will end) .
 * Use keyboards arrows to move the hero in the maze.
-* Objects get collected automatically when hero arrives on their positions.
+* Objects get collected automatically when the hero arrives on their positions.
 * Game will end successfuly or not once the hero arrives at the guard position.
 * Exit game can be done at any time by clicking on the game window right corner "x" button.
