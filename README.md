@@ -18,12 +18,9 @@ Ensure you have **python 3** installed. If not, you can download it and install 
 ### 3.3. Create a vitrtual environment (*optionnal but recommended*).
 In order to avoid python version and libraries conflicts:
 * Create a virtual environment using **venv** package
-'''sh
-python -m venv game_repository/my_virtual_environment
-'''
+>python -m venv game_repository/my_virtual_environment<
 * Activate the created virtual envrionnment.
-'''sh
-source my/game/repository/my_virtual_environment/Scripts/activate<>
+>source my/game/repository/my_virtual_environment/Scripts/activate<
 '''
 Documentation for this is also available on [python offical website](https://www.python.org/).
 
@@ -37,7 +34,10 @@ The programm is now ready to use. You can lauch xxx.py with your bash:
 ### 3.6. Leave the virtual environment.
 Once you're done with playing, you should leave the virtual environnement. Simply type
 > deactivate
+>
 in your bash.
+> deactivate<blockquote>
+
 
 ### 3.7. Uninstall.
 If you want to uninstall the game simply delete the complete repository.
