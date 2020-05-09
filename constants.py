@@ -1,14 +1,23 @@
 #-*-coding:utf-8 -*
 """Programm constants"""
 
-#source data, the labyrinthe
+# Source data, the labyrinthe.
+# Original file contain 15 raws and columns.It can be changed but parity column vs
+# raw must remain. If changed make sure to set constant NUMBER_OF_CELLS_PER_SIDE accordingly.
+# File must only contain values:
+#	 "0" i.e. wall
+#	 "1" i.e. path
+#	 "2" i.e. start
+#	 "3" i.e. end
 DATA_FILE = "data/labyrinthe.txt"
 
-#labyrinthe dimensions
+#Number of cells(i.e. where player can potentially move) per labyrinthe side.
 NUMBER_OF_CELL_PER_SIDE = 15
+
+#Size of a cells(in pixels)
 CELL_SIZE = 32
 
-# objects list
+# Objects list. 
 OBJECTS = ["Needle", "Plastic tube", "Ether"]
 
 #game images

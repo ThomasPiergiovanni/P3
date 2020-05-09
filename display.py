@@ -92,7 +92,7 @@ class Display:
         font = pygame.font.Font('freesansbold.ttf', 12)
         coo_x = 0
         coo_y = 490
-        backpack = font.render("Collected objects: "+\
-         str(len(macgyver_instance.collected_objects)) + "/3",\
-          True, constants.YELLOW)
+        backpack = font.render("Collected objects: " + \
+        str(len(macgyver_instance.collected_objects)) + "/" + \
+        str(len(constants.OBJECTS)), True, constants.YELLOW)
         self.screen.blit(backpack, (coo_x, coo_y))
