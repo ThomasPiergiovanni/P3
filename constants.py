@@ -7,7 +7,7 @@
 # Comments: File can contain only values "0" i.e. wall, "1" i.e. path,
 # "2" i.e. start and "3"  i.e. end. Raws and columns number can be changed
 # but changed but parity 'column'vs'raw' must be kept.If changed, make sure
-# to set the constant NUMBER_OF_CELLS_PER_SIDE accordingly. 
+# to set the constant NUMBER_OF_CELLS_PER_SIDE accordingly.
 DATA_FILE = "data/labyrinthe.txt"
 
 # Description: Number of cells(i.e. where player can potentially move) per
@@ -26,7 +26,7 @@ NUMBER_OF_CELL_PER_SIDE = 15
 # are changed accordingly.
 CELL_SIZE = 32
 
-# Description: Message box height ratio vs the grid size. 
+# Description: Message box height ratio vs the grid size.
 # Mandatory: Yes.
 # Settings: 0.2 (default).
 # Comment:Cannot be changed.
