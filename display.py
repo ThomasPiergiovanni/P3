@@ -13,7 +13,9 @@ class Display:
     """
     def __init__(self):
         pygame.init()
-        self.screen = pygame.display.set_mode((480, 580))
+        self.size = constants.NUMBER_OF_CELL_PER_SIDE *\
+        constants.CELL_SIZE
+        self.screen = pygame.display.set_mode((self.size , self.size + 100 ))
         pygame.display.set_caption("Help MacGyver to escape!")
         self.icon = pygame.image.load(constants.IMAGE_MACGYVER)
         pygame.display.set_icon(self.icon)
