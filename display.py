@@ -13,9 +13,9 @@ class Display:
     """
     def __init__(self):
         pygame.init()
-        self.size = constants.NUMBER_OF_CELL_PER_SIDE *\
+        self.side_lenght = constants.NUMBER_OF_CELL_PER_SIDE *\
         constants.CELL_SIZE
-        self.screen = pygame.display.set_mode((self.size , self.size + 100 ))
+        self.screen = pygame.display.set_mode((self.side_lenght, self.side_lenght + int(self.side_lenght * constants.MBOX_HEIGHT_RATIO )))
         pygame.display.set_caption("Help MacGyver to escape!")
         self.icon = pygame.image.load(constants.IMAGE_MACGYVER)
         pygame.display.set_icon(self.icon)
@@ -49,7 +49,8 @@ class Display:
         """Method for displaying "welcome message" on "menu" stage.
         """
         self.screen.blit(self.gamecover, (0, 0))
-        font = pygame.font.Font('freesansbold.ttf', 20)
+        font = pygame.font.Font('freesansbold.ttf', int(self.side_lenght * \
+        constants.MEDIUM_FONT_SIZE_RATIO))
         coo_x = 85
         coo_y = 510
         message = font.render("Do you want to play (press y / n)?" \
@@ -60,12 +61,14 @@ class Display:
         """Method for displaying "winner message" on "menu" stage.
         """
         self.screen.blit(self.gamecover, (0, 0))
-        font = pygame.font.Font('freesansbold.ttf', 46)
+        font = pygame.font.Font('freesansbold.ttf', int(self.side_lenght * \
+        constants.BIG_FONT_SIZE_RATIO))
         coo_x = 105
         coo_y = 485
         message = font.render("You\'ve won!", True, constants.GREEN)
         self.screen.blit(message, (coo_x, coo_y))
-        font = pygame.font.Font('freesansbold.ttf', 20)
+        font = pygame.font.Font('freesansbold.ttf', int(self.side_lenght * \
+        constants.MEDIUM_FONT_SIZE_RATIO))
         coo_x = 55
         coo_y = 545
         message = font.render("Do you want to play again (press y / n)?" \
@@ -76,12 +79,14 @@ class Display:
         """Method for displaying "looser message" on "menu" stage.
         """
         self.screen.blit(self.gamecover, (0, 0))
-        font = pygame.font.Font('freesansbold.ttf', 46)
+        font = pygame.font.Font('freesansbold.ttf', int(self.side_lenght * \
+        constants.BIG_FONT_SIZE_RATIO))
         coo_x = 117
         coo_y = 485
         message = font.render("Game oveR ", True, constants.RED)
         self.screen.blit(message, (coo_x, coo_y))
-        font = pygame.font.Font('freesansbold.ttf', 20)
+        font = pygame.font.Font('freesansbold.ttf', int(self.side_lenght * \
+        constants.MEDIUM_FONT_SIZE_RATIO))
         coo_x = 55
         coo_y = 545
         message = font.render("Do you want to play again (press y / n)?" \
@@ -91,9 +96,10 @@ class Display:
     def collection(self, macgyver_instance):
         """Method for displaying "collected objects message" on "play" stage.
         """
-        font = pygame.font.Font('freesansbold.ttf', 12)
+        font = pygame.font.Font('freesansbold.ttf', int(self.side_lenght * \
+        constants.SMALL_FONT_SIZE_RATIO))
         coo_x = 0
-        coo_y = 490
+        coo_y = self.side_lenght + int(self.side_lenght * constants.TEXT_OBJ_HEIGHT_RATIO)
         backpack = font.render("Collected objects: " + \
         str(len(macgyver_instance.collected_objects)) + "/" + \
         str(len(constants.OBJECTS)), True, constants.YELLOW)
