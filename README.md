@@ -10,25 +10,27 @@ This programm requires the following components:
 
 ## 3. Installation.
 ### 3.1. Download.
-Download this repository on your system, at the location that suits you best.
+Download/Clone this repository on your system, at the location that suits you best.
 
-### 3.2. Python3 install.
-Ensure you have **python 3** installed. If not, you can download it and install it from the [python offical website](https://www.python.org/). You'll find the necessary documentation there.
+### 3.2. Python 3 install.
+Make sure you have **Python 3** installed. If not, you can download it and install it from the [python offical website](https://www.python.org/). You'll find the necessary documentation there.
 
-### 3.3. Create a virttual environment (*optionnal but recommended*).
+### 3.3. Create a virtual environment (*optionnal but recommended*).
 In order to avoid system conflicts:
 * Create a virtual environment using **venv** package.
->python -m venv game_repository/my_virtual_environment  
-* Activate virtual envrionment.
->source my_virtual_environment/Scripts/activate  
+> python3 -m venv myenv  
+* Activate the virtual envrionment.
+> source myenv/Scripts/activate    
 Documentation is also available on [python offical website](https://www.python.org/).
 
 ### 3.4. Pygame install.
-Install **pygame** on you virtual environement. Documentation for pygame and it's installation can be found on the [pygame website](https://www.pygame.org/news).
+Install **pygame** on you virtual environement using the requirements.txt file.   
+> pip install -r requirements.txt  
+If necessary documentation for pygame can be found on the [pygame website](https://www.pygame.org/news).
 
 ### 3.5. Play.
-The programm is now ready to use. You can launch **launch.py** with your bash.
-> python xxx.py  
+The programm is now ready to use. You can launch **launch.py** with your bash.  
+> python3 launch.py  
 
 ### 3.6. Leave the virtual environment.
 Once you're done with playing, you should leave the virtual environement. Simply type the following in your bash.
