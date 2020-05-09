@@ -56,7 +56,7 @@ class Display:
         coo_x = int(self.grid_size * constants.WELCOME_X_RATIO)
         coo_y = int(self.grid_size * constants.WELCOME_Y_RATIO)
         message = font.render("Do you want to play (press y / n)?" \
-        , True, constants.WHITE)
+        , True, constants.COLOR_WHITE)
         self.screen.blit(message, (coo_x, coo_y))
 
     def winner(self):
@@ -67,14 +67,14 @@ class Display:
         constants.BIG_FONT_SIZE_RATIO))
         coo_x = int(self.grid_size * constants.LINE1_X_RATIO)
         coo_y = int(self.grid_size * constants.LINE1_Y_RATIO)
-        message = font.render("You\'ve won!", True, constants.GREEN)
+        message = font.render("You\'ve won!", True, constants.COLOR_GREEN)
         self.screen.blit(message, (coo_x, coo_y))
         font = pygame.font.Font('freesansbold.ttf', int(self.grid_size * \
         constants.MEDIUM_FONT_SIZE_RATIO))
         coo_x = int(self.grid_size * constants.LINE2_X_RATIO)
         coo_y = int(self.grid_size * constants.LINE2_Y_RATIO)
         message = font.render("Do you want to play again (press y / n)?" \
-        , True, constants.WHITE)
+        , True, constants.COLOR_WHITE)
         self.screen.blit(message, (coo_x, coo_y))
 
     def looser(self):
@@ -85,14 +85,14 @@ class Display:
         constants.BIG_FONT_SIZE_RATIO))
         coo_x = int(self.grid_size * constants.LINE1_X_RATIO)
         coo_y = int(self.grid_size * constants.LINE1_Y_RATIO)
-        message = font.render("Game oveR ", True, constants.RED)
+        message = font.render("Game oveR ", True, constants.COLOR_RED)
         self.screen.blit(message, (coo_x, coo_y))
         font = pygame.font.Font('freesansbold.ttf', int(self.grid_size * \
         constants.MEDIUM_FONT_SIZE_RATIO))
         coo_x = int(self.grid_size * constants.LINE2_X_RATIO)
         coo_y = int(self.grid_size * constants.LINE2_Y_RATIO)
         message = font.render("Do you want to play again (press y / n)?" \
-        , True, constants.WHITE)
+        , True, constants.COLOR_WHITE)
         self.screen.blit(message, (coo_x, coo_y))
 
     def collection(self, macgyver_instance):
@@ -104,5 +104,5 @@ class Display:
         coo_y = int(self.grid_size * constants.COLLECTION_Y_RATIO)
         backpack = font.render("Collected objects: " + \
         str(len(macgyver_instance.collected_objects)) + "/" + \
-        str(len(constants.OBJECTS)), True, constants.YELLOW)
+        str(len(constants.OBJECTS)), True, constants.COLOR_YELLOW)
         self.screen.blit(backpack, (coo_x, coo_y))
