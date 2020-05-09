@@ -7,6 +7,7 @@ import item
 import guard
 import macgyver
 import status
+import constants
 
 class Play:
     """Play class.
@@ -38,10 +39,10 @@ class Play:
         """
         for elt in self.grid.cells:
             if self.macgyver.xy_position == elt.xy_position and elt.cell_type == 3 \
-            and len(self.macgyver.collected_objects) == 3:
+            and len(self.macgyver.collected_objects) == len(constants.OBJECTS):
                 status_instance.game = 1
                 status.Status.play_end(status_instance)
             if self.macgyver.xy_position == elt.xy_position and elt.cell_type == 3 \
-            and len(self.macgyver.collected_objects) < 3:
+            and len(self.macgyver.collected_objects) < len(constants.OBJECTS):
                 status_instance.game = 2
                 status.Status.play_end(status_instance)
