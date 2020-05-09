@@ -13,10 +13,11 @@ class Display:
     """
     def __init__(self):
         pygame.init()
-        self.side_lenght = constants.NUMBER_OF_CELL_PER_SIDE *\
+        self.grid_size = constants.NUMBER_OF_CELL_PER_SIDE * \
         constants.CELL_SIZE
-        self.screen = pygame.display.set_mode((self.side_lenght, \
-        self.side_lenght + int(self.side_lenght * constants.MBOX_Y_RATIO)))
+        self.screen = pygame.display.set_mode((self.grid_size, \
+        self.grid_size + int(self.grid_size * \
+        constants.MESSAGEBOX_HEIGHT_RATIO)))
         pygame.display.set_caption("Help MacGyver to escape!")
         self.icon = pygame.image.load(constants.IMAGE_MACGYVER)
         pygame.display.set_icon(self.icon)
@@ -50,10 +51,10 @@ class Display:
         """Method for displaying "welcome message" on "menu" stage.
         """
         self.screen.blit(self.gamecover, (0, 0))
-        font = pygame.font.Font('freesansbold.ttf', int(self.side_lenght * \
+        font = pygame.font.Font('freesansbold.ttf', int(self.grid_size * \
         constants.MEDIUM_FONT_SIZE_RATIO))
-        coo_x = int(self.side_lenght * constants.WELCOME_X_RATIO)
-        coo_y = int(self.side_lenght * constants.WELCOME_Y_RATIO)
+        coo_x = int(self.grid_size * constants.WELCOME_X_RATIO)
+        coo_y = int(self.grid_size * constants.WELCOME_Y_RATIO)
         message = font.render("Do you want to play (press y / n)?" \
         , True, constants.WHITE)
         self.screen.blit(message, (coo_x, coo_y))
@@ -62,16 +63,16 @@ class Display:
         """Method for displaying "winner message" on "menu" stage.
         """
         self.screen.blit(self.gamecover, (0, 0))
-        font = pygame.font.Font('freesansbold.ttf', int(self.side_lenght * \
+        font = pygame.font.Font('freesansbold.ttf', int(self.grid_size * \
         constants.BIG_FONT_SIZE_RATIO))
-        coo_x = int(self.side_lenght * constants.LINE1_X_RATIO)
-        coo_y = int(self.side_lenght * constants.LINE1_Y_RATIO)
+        coo_x = int(self.grid_size * constants.LINE1_X_RATIO)
+        coo_y = int(self.grid_size * constants.LINE1_Y_RATIO)
         message = font.render("You\'ve won!", True, constants.GREEN)
         self.screen.blit(message, (coo_x, coo_y))
-        font = pygame.font.Font('freesansbold.ttf', int(self.side_lenght * \
+        font = pygame.font.Font('freesansbold.ttf', int(self.grid_size * \
         constants.MEDIUM_FONT_SIZE_RATIO))
-        coo_x = int(self.side_lenght * constants.LINE2_X_RATIO)
-        coo_y = int(self.side_lenght * constants.LINE2_Y_RATIO)
+        coo_x = int(self.grid_size * constants.LINE2_X_RATIO)
+        coo_y = int(self.grid_size * constants.LINE2_Y_RATIO)
         message = font.render("Do you want to play again (press y / n)?" \
         , True, constants.WHITE)
         self.screen.blit(message, (coo_x, coo_y))
@@ -80,16 +81,16 @@ class Display:
         """Method for displaying "looser message" on "menu" stage.
         """
         self.screen.blit(self.gamecover, (0, 0))
-        font = pygame.font.Font('freesansbold.ttf', int(self.side_lenght * \
+        font = pygame.font.Font('freesansbold.ttf', int(self.grid_size * \
         constants.BIG_FONT_SIZE_RATIO))
-        coo_x = int(self.side_lenght * constants.LINE1_X_RATIO)
-        coo_y = int(self.side_lenght * constants.LINE1_Y_RATIO)
+        coo_x = int(self.grid_size * constants.LINE1_X_RATIO)
+        coo_y = int(self.grid_size * constants.LINE1_Y_RATIO)
         message = font.render("Game oveR ", True, constants.RED)
         self.screen.blit(message, (coo_x, coo_y))
-        font = pygame.font.Font('freesansbold.ttf', int(self.side_lenght * \
+        font = pygame.font.Font('freesansbold.ttf', int(self.grid_size * \
         constants.MEDIUM_FONT_SIZE_RATIO))
-        coo_x = int(self.side_lenght * constants.LINE2_X_RATIO)
-        coo_y = int(self.side_lenght * constants.LINE2_Y_RATIO)
+        coo_x = int(self.grid_size * constants.LINE2_X_RATIO)
+        coo_y = int(self.grid_size * constants.LINE2_Y_RATIO)
         message = font.render("Do you want to play again (press y / n)?" \
         , True, constants.WHITE)
         self.screen.blit(message, (coo_x, coo_y))
@@ -97,10 +98,10 @@ class Display:
     def collection(self, macgyver_instance):
         """Method for displaying "collected objects message" on "play" stage.
         """
-        font = pygame.font.Font('freesansbold.ttf', int(self.side_lenght * \
+        font = pygame.font.Font('freesansbold.ttf', int(self.grid_size * \
         constants.SMALL_FONT_SIZE_RATIO))
         coo_x = 0
-        coo_y =self.side_lenght + int(self.side_lenght * constants.COLLECTION_Y_RATIO)
+        coo_y = int(self.grid_size * constants.COLLECTION_Y_RATIO)
         backpack = font.render("Collected objects: " + \
         str(len(macgyver_instance.collected_objects)) + "/" + \
         str(len(constants.OBJECTS)), True, constants.YELLOW)
