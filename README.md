@@ -1,7 +1,7 @@
 # Project 3 - Help MacGyver to escape!
 
 ## 1. Introduction.
-This python package is a 2D game named **'Help MacGyver to escape!'**. It consist of **moving** the hero (MacGyver) **on a maze** and **make him escape that place**. The hero will be able to leave that place if he reaches **the exit**. The problem, **a guard** is protecting the exit and he **has no intention to let our hero go out** so easily. Therefore, the hero will have to **collect all objects** dispatch here and there in the maze (a platic tube, a needle and a bottle of ether). This in order to build a syringe full of ether that will allow him to inject the guard and put him to sleep. **This is how, our hero can become a free again**. 
+This python package is a 2D game named **'Help MacGyver to escape!'**. It consist of **moving the hero** (MacGyver) **on a maze** and **make him escape that place**. The hero will be able to leave that place if he **reaches the exit**. The problem, **a guard** is protecting the exit and he **has no intention to let our hero go out** so easily. Therefore, the hero will have to **collect all objects** dispatch here and there in the maze (a platic tube, a needle and a bottle of ether). This in order to build a syringe full of ether that will allow him to inject the guard and put him to sleep. **This is how, our hero can become a free again**. 
 
 ## 2. Prerequisite.
 This programm requires the following components:
@@ -18,14 +18,17 @@ Make sure you have **Python 3** installed. If not, you can download it and insta
 ### 3.3. Create a virtual environment (*optionnal but recommended*).
 In order to avoid system conflicts:
 * Create a virtual environment using **venv** package.
-> python3 -m venv myenv  
+> python3 -m venv myenv
+
 * Activate the virtual envrionment.
-> source myenv/Scripts/activate    
+> source myenv/Scripts/activate
+
 Documentation is also available on [python offical website](https://www.python.org/).
 
 ### 3.4. Pygame install.
 Install **pygame** on you virtual environement using the requirements.txt file.   
-> pip install -r requirements.txt    
+> pip install -r requirements.txt
+
 If necessary documentation for pygame can be found on the [pygame website](https://www.pygame.org/news).
 
 ### 3.5. Play.
