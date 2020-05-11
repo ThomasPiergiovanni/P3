@@ -14,10 +14,10 @@ class Guard:
     def position(self, grid_instance):
         """Method sets Guard instance on the appropriate cell.
         """
-        xy_position = [elt.xy_position  for elt in grid_instance.cells if \
+        xy_position = [elt.xy_position for elt in grid_instance.cells if \
         elt.cell_type == 3]
         self.xy_position = xy_position[0]
-        
+
     def show(self, screen):
         """Method for Guard instance display.
         """

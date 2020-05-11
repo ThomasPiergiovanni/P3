@@ -1,9 +1,7 @@
 #-*-coding:utf-8 -*
 """Play module"""
 import grid
-import cell
 import objects
-import item
 import guard
 import macgyver
 import status
