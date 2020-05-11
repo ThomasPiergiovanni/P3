@@ -49,16 +49,16 @@ Changing settings can only be done to constants in the **constants.py** file.
 **Description** : Source data, the labyrinthe.  
 **Mandatory** : Yes.  
 **Settings** : "data/labyrinthe.txt" (default).  
-**Comments** : File can contain only values "0" i.e. wall, "1" i.e. path,"2" i.e.  start and "3"  i.e. end. Raws and columns number can be changed but changed but parity 'column'vs'raw' must be kept.If changed, make sure to set the constant NUMBER_OF_CELLS_PER_SIDE accordingly. 
+**Comments** : File can contain only values "0" i.e. wall, "1" i.e. path,"2" i.e.  start and "3"  i.e. end. Raws and columns number can be changed but parity 'columns 'vs' raws' must be kept. If changed, make sure to set the constant NUMBER_OF_CELLS_PER_SIDE accordingly. 
 
 #### 4.2. NUMBER_OF_CELL_PER_SIDE
-**Description** : Number of cells(i.e. where player can potentially move) per labyrinthe side.     
+**Description** : Number of cells (i.e. where player can potentially move) per labyrinthe side.     
 **Mandatory** : Yes.   
 **Settings** : 15 (default).  
-**Comments** : Can be changed according to DATA_FILE file changes.See DATA_FILE commments. 
+**Comments** : Can be changed according to DATA_FILE file changes. See DATA_FILE commments. 
 
 #### 4.3. CELL_SIZE
-**Description** : Heights and width of a cell(in pixels).   
+**Description** : Heights and width of a cell (in pixels).   
 **Mandatory** : Yes.  
 **Settings** : 32 (default).   
 **Comments** :  Size is set accoring to the game images size (in pixel). Cannot be changed unless all games images, except IMAGE_GAMECOVER, are changed accordingly.
@@ -84,7 +84,7 @@ Changing settings can only be done to constants in the **constants.py** file.
 #### 4.7. COLOR_\*
 **Description** : Various RGB colors for game messages.   
 **Mandatory** : Yes.  
-**Settings** : (R,G,B).  
+**Settings** : (R, G, B).  
 **Comments** : Can be changed.
 
 ## 5. User's Guide.
