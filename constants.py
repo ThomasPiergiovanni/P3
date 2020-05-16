@@ -6,7 +6,7 @@
 # Settings: "data/labyrinthe.txt" (default).
 # Comments: File can contain only values "0" i.e. wall, "1" i.e. path,
 # "2" i.e. start and "3"  i.e. end. Raws and columns number can be changed
-# but changed but parity 'column'vs'raw' must be kept.If changed, make sure
+# but parity 'column'vs'raw' must be kept.If changed, make sure
 # to set the constant NUMBER_OF_CELLS_PER_SIDE accordingly.
 DATA_FILE = "data/labyrinthe.txt"
 

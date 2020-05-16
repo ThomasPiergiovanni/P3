@@ -17,11 +17,11 @@ Make sure you have **Python 3** installed. If not, you can download it and insta
 
 ### 3.3. Create a virtual environment (*optionnal but recommended*).
 In order to avoid system conflicts:
-* Create a virtual environment using **venv** package.
-> python3 -m venv myenv
+* Go into your local repository and create a virtual environment using **venv** package.
+> python3 -m venv env
 
 * Activate the virtual envrionment.
-> source myenv/Scripts/activate
+> source env/Scripts/activate
 
 Documentation is also available on [python offical website](https://www.python.org/).
 
