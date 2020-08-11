@@ -5,8 +5,8 @@ This python package is a 2D game named **'Help MacGyver to escape!'**. It consis
 
 ## 2. Prerequisite.
 This programm requires the following components:
-* **python 3**
-* **pygame==1.9.6***
+* **Python 3**
+* **pygame==1.9.6**
 
 ## 3. Installation.
 ### 3.1. Download.
